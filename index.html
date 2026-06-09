@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tequila Guide — Agave Matchmaker Ratings</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dm-green: #006B3C;
+    --dm-green-dark: #00522E;
+    --dm-green-light: #008549;
+    --dm-green-pale: #E8F5EE;
+    --dm-green-mid: #CCE8D8;
+    --white: #ffffff;
+    --off-white: #F5F5F5;
+    --text: #1A1A1A;
+    --text-muted: #666666;
+    --border: #E0E0E0;
+    --border-green: rgba(0,107,60,0.2);
+    --score-excellent-bg: #E8F5EE;
+    --score-excellent-text: #00522E;
+    --score-good-bg: #FFF8E1;
+    --score-good-text: #7B5E00;
+    --score-avg-bg: #FFF3E0;
+    --score-avg-text: #8B4000;
+    --score-low-bg: #FFEBEE;
+    --score-low-text: #880018;
+    --score-na-bg: #F5F5F5;
+    --score-na-text: #888888;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#F5F5F5; color:var(--text); font-family:'Montserrat', sans-serif; min-height:100vh; }
+
+  /* NAV BAR */
+  .topbar { background:var(--dm-green-dark); height:6px; }
+  header { background:var(--dm-green); padding:0 24px; display:flex; align-items:center; gap:16px; height:64px; box-shadow:0 2px 8px rgba(0,0,0,0.18); }
+  .logo { font-size:22px; font-weight:800; color:#fff; letter-spacing:-0.5px; display:flex; align-items:center; gap:8px; }
+  .logo-badge { background:#fff; color:var(--dm-green); font-size:10px; font-weight:800; padding:2px 7px; border-radius:3px; letter-spacing:1px; text-transform:uppercase; }
+  .header-sub { font-size:12px; color:rgba(255,255,255,0.7); font-weight:500; margin-left:auto; }
+
+  /* HERO BANNER */
+  .hero { background:linear-gradient(135deg, var(--dm-green) 0%, var(--dm-green-dark) 100%); padding:28px 24px 24px; border-bottom:3px solid var(--dm-green-dark); }
+  .hero h1 { font-size:clamp(20px,4vw,32px); font-weight:800; color:#fff; margin-bottom:6px; letter-spacing:-0.5px; }
+  .hero p { font-size:13px; color:rgba(255,255,255,0.8); font-weight:500; }
+
+  /* LEGEND */
+  .legend { background:#fff; border-bottom:1px solid var(--border); padding:12px 24px; display:flex; gap:16px; flex-wrap:wrap; align-items:center; }
+  .legend-title { font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-right:4px; }
+  .legend-item { display:flex; align-items:center; gap:6px; font-size:11px; font-weight:600; }
+  .leg-badge { display:inline-block; padding:2px 10px; border-radius:20px; font-size:10px; font-weight:700; }
+  .leg-excellent { background:var(--score-excellent-bg); color:var(--score-excellent-text); }
+  .leg-good { background:var(--score-good-bg); color:var(--score-good-text); }
+  .leg-avg { background:var(--score-avg-bg); color:var(--score-avg-text); }
+  .leg-low { background:var(--score-low-bg); color:var(--score-low-text); }
+  .leg-na { background:var(--score-na-bg); color:var(--score-na-text); }
+
+  /* CONTROLS */
+  .controls { background:#fff; padding:14px 24px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; border-bottom:3px solid var(--dm-green-pale); position:sticky; top:0; z-index:10; box-shadow:0 2px 6px rgba(0,0,0,0.06); }
+  .filter-btn { font-family:'Montserrat',sans-serif; font-size:12px; font-weight:700; padding:7px 16px; border:2px solid var(--border); background:#fff; color:var(--text-muted); cursor:pointer; border-radius:4px; transition:all 0.15s; text-transform:uppercase; letter-spacing:0.5px; }
+  .filter-btn:hover { border-color:var(--dm-green); color:var(--dm-green); }
+  .filter-btn.active { border-color:var(--dm-green); background:var(--dm-green); color:#fff; }
+  .sort-wrap { margin-left:auto; display:flex; align-items:center; gap:8px; }
+  .sort-label { font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; white-space:nowrap; }
+  select { font-family:'Montserrat',sans-serif; font-size:12px; font-weight:600; background:#fff; color:var(--text); border:2px solid var(--border); padding:7px 12px; cursor:pointer; outline:none; border-radius:4px; }
+  select:focus { border-color:var(--dm-green); }
+
+  /* COUNT */
+  .count-bar { padding:10px 24px; font-size:12px; font-weight:600; color:var(--text-muted); background:var(--off-white); border-bottom:1px solid var(--border); }
+  .count-bar span { color:var(--dm-green); font-weight:800; }
+
+  /* TABLE */
+  .table-wrap { padding:16px 24px 48px; overflow-x:auto; }
+  table { width:100%; border-collapse:separate; border-spacing:0 6px; }
+  thead th { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); padding:8px 14px; text-align:left; cursor:pointer; user-select:none; background:transparent; border-bottom:2px solid var(--dm-green); white-space:nowrap; }
+  thead th:hover { color:var(--dm-green); }
+  thead th.sort-active { color:var(--dm-green); }
+  thead th .sort-arrow { margin-left:4px; font-size:10px; opacity:0.5; }
+  thead th.sort-active .sort-arrow { opacity:1; }
+
+  tbody tr { background:#fff; border-radius:6px; transition:box-shadow 0.15s, transform 0.1s; box-shadow:0 1px 3px rgba(0,0,0,0.06); }
+  tbody tr:hover { box-shadow:0 3px 12px rgba(0,107,60,0.12); transform:translateY(-1px); }
+  tbody tr.hidden { display:none; }
+
+  td { padding:13px 14px; vertical-align:middle; font-size:13px; }
+  td:first-child { border-left:4px solid transparent; border-radius:6px 0 0 6px; }
+  tbody tr:hover td:first-child { border-left-color:var(--dm-green); }
+  td:last-child { border-radius:0 6px 6px 0; }
+
+  .brand-name { font-size:14px; font-weight:800; color:var(--text); display:block; line-height:1.3; }
+  .expression { font-size:11px; font-weight:600; color:var(--text-muted); display:block; margin-top:2px; }
+
+  .type-pill { display:inline-block; font-size:9px; font-weight:800; letter-spacing:1px; text-transform:uppercase; padding:3px 9px; border-radius:20px; margin-top:5px; }
+  .pill-blanco    { background:#E3F2E8; color:#1B6B3A; }
+  .pill-reposado  { background:#FFF8E1; color:#7B5E00; }
+  .pill-anejo     { background:#FFF3E0; color:#8B4000; }
+  .pill-extra     { background:#FCE4EC; color:#880E4F; }
+  .pill-gold      { background:#FFF9C4; color:#5D4E00; }
+  .pill-liqueur   { background:#EDE7F6; color:#4527A0; }
+
+  .price-cell { font-size:14px; font-weight:800; color:var(--dm-green-dark); white-space:nowrap; }
+
+  .score-cell { text-align:center; }
+  .score-badge { display:inline-flex; align-items:center; justify-content:center; min-width:44px; height:32px; padding:0 10px; border-radius:6px; font-size:15px; font-weight:800; }
+  .score-excellent { background:var(--score-excellent-bg); color:var(--score-excellent-text); }
+  .score-good      { background:var(--score-good-bg); color:var(--score-good-text); }
+  .score-average   { background:var(--score-avg-bg); color:var(--score-avg-text); }
+  .score-low       { background:var(--score-low-bg); color:var(--score-low-text); }
+  .score-na        { background:var(--score-na-bg); color:var(--score-na-text); font-size:11px; font-weight:700; }
+
+  .note-cell { font-size:12px; color:var(--text-muted); line-height:1.55; max-width:280px; min-width:180px; font-weight:500; }
+
+  @media (max-width:700px) {
+    header, .hero, .controls, .table-wrap, .legend, .count-bar { padding-left:12px; padding-right:12px; }
+    .note-cell { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar"></div>
+<header>
+  <div class="logo">Dan Murphy's <span class="logo-badge">Tequila</span></div>
+  <div class="header-sub">AMM Community Ratings Guide</div>
+</header>
+
+<div class="hero">
+  <h1>Tequila Range — Agave Matchmaker Ratings</h1>
+  <p>All expressions from the current range, compared against the Agave Matchmaker community score</p>
+</div>
+
+<div class="legend">
+  <span class="legend-title">Score Key:</span>
+  <div class="legend-item"><span class="leg-badge leg-excellent">86+</span> Excellent</div>
+  <div class="legend-item"><span class="leg-badge leg-good">80–85</span> Good</div>
+  <div class="legend-item"><span class="leg-badge leg-avg">70–79</span> Average</div>
+  <div class="legend-item"><span class="leg-badge leg-low">&lt;70</span> Low</div>
+  <div class="legend-item"><span class="leg-badge leg-na">N/R</span> Not on AMM</div>
+  &nbsp;|&nbsp;
+  <span class="legend-title">Types:</span>
+  <div class="legend-item"><span class="type-pill pill-blanco" style="margin-top:0">Blanco</span></div>
+  <div class="legend-item"><span class="type-pill pill-reposado" style="margin-top:0">Reposado</span></div>
+  <div class="legend-item"><span class="type-pill pill-anejo" style="margin-top:0">Añejo</span></div>
+  <div class="legend-item"><span class="type-pill pill-extra" style="margin-top:0">Extra Añejo</span></div>
+  <div class="legend-item"><span class="type-pill pill-gold" style="margin-top:0">Gold</span></div>
+  <div class="legend-item"><span class="type-pill pill-liqueur" style="margin-top:0">Liqueur</span></div>
+</div>
+
+<div class="controls">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="Blanco">Blanco</button>
+  <button class="filter-btn" data-filter="Reposado">Reposado</button>
+  <button class="filter-btn" data-filter="Añejo">Añejo</button>
+  <button class="filter-btn" data-filter="Extra Añejo">Extra Añejo</button>
+  <button class="filter-btn" data-filter="Gold">Gold</button>
+  <button class="filter-btn" data-filter="Liqueur">Liqueur</button>
+  <div class="sort-wrap">
+    <span class="sort-label">Sort by</span>
+    <select id="sortSelect">
+      <option value="brand">Brand A–Z</option>
+      <option value="score-desc">Rating High–Low</option>
+      <option value="score-asc">Rating Low–High</option>
+      <option value="price-asc">Price Low–High</option>
+      <option value="price-desc">Price High–Low</option>
+    </select>
+  </div>
+</div>
+
+<div class="count-bar">Showing <span id="visCount">0</span> expressions</div>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th data-sort="brand">Brand &amp; Expression <span class="sort-arrow">↓</span></th>
+      <th data-sort="type">Type <span class="sort-arrow">↕</span></th>
+      <th data-sort="price">Price (AUD) <span class="sort-arrow">↕</span></th>
+      <th data-sort="score">AMM Community <span class="sort-arrow">↕</span></th>
+      <th>Note</th>
+    </tr>
+  </thead>
+  <tbody id="tbody"></tbody>
+</table>
+</div>
+
+<script>
+const data = [
+  // FORTALEZA
+  { brand:"Fortaleza", expression:"Blanco", type:"Blanco", price:140.99, score:90, note:"Stone-milled, estate-made, additive-free. A benchmark craft blanco — cooked agave, black pepper, buttery mouthfeel. One of the best on the shelf." },
+  { brand:"Fortaleza", expression:"Reposado", type:"Reposado", price:155, score:89, note:"8 months in ex-bourbon barrels. Vegetal sweetness meets soft vanilla. Storied Sauza family distillery revived in traditional style." },
+  { brand:"Fortaleza", expression:"Añejo", type:"Añejo", price:246.99, score:91, note:"Minimum 2 years aged. Rich, sweet, remarkably soft. AMM community considers this among the finest sipping añejos available." },
+
+  // DON JULIO
+  { brand:"Don Julio", expression:"Blanco", type:"Blanco", price:90, score:77, note:"Approachable and widely available. Light citrus and clean. AMM purists note additive concerns. Good cocktail base, uninspiring neat." },
+  { brand:"Don Julio", expression:"Reposado", type:"Reposado", price:98, score:81, note:"8 months in American white oak. Vanilla-forward and easy-drinking. Good community score but lacks complexity for enthusiasts." },
+  { brand:"Don Julio", expression:"Añejo", type:"Añejo", price:109, score:83, note:"18+ months aged. Oak-balanced agave with vanilla notes. Decent for the price, community notes it leans barrel-heavy." },
+  { brand:"Don Julio", expression:"1942 Añejo", type:"Añejo", price:280, score:85, note:"The gateway luxury tequila. Sweet caramel and toffee-forward. Beloved by many — but AMM purists prefer more agave character at this price." },
+  { brand:"Don Julio", expression:"Rosado", type:"Reposado", price:230.99, score:74, note:"Reposado finished in Ruby Port wine casks from Portugal's Douro region. Delicate pink hue, notes of dried red fruit. Divisive — some love it, others find it too sour." },
+
+
+  // PATRÓN
+  { brand:"Patrón", expression:"Silver", type:"Blanco", price:91.90, score:74, note:"The bottle that popularised premium tequila. Smooth and inoffensive but consistently rated low by AMM — overpriced for the liquid inside." },
+  { brand:"Patrón", expression:"Reposado", type:"Reposado", price:109.99, score:74, note:"Aged minimum 2 months. Agave, oak, citrus and honey. AMM ratings are middling — decent in cocktails but outclassed at the price." },
+  { brand:"Patrón", expression:"Añejo", type:"Añejo", price:136.99, score:76, note:"12 months in French, Hungarian and American oak. Vanilla and raisin. Better than Silver and Repo but still underwhelms AMM reviewers." },
+  { brand:"Patrón", expression:"El Alto", type:"Reposado", price:309.99, score:79, note:"Tahona-crafted blend of Reposado, Añejo and Extra Añejo tequilas — classified as Reposado. More complexity than standard Patrón. AMM rates it average for the price." },
+  { brand:"Patrón", expression:"El Cielo", type:"Blanco", price:249.99, score:77, note:"Four-times distilled luxury Silver tequila — world's first 4x distilled blanco. Ultra-smooth but agave character is light. Polarising for $250." },
+
+
+  // CASAMIGOS
+  { brand:"Casamigos", expression:"Blanco", type:"Blanco", price:82.99, score:74, note:"George Clooney's tequila. Cream soda and cake batter profile — known additives. AMM community is unimpressed for the price paid." },
+  { brand:"Casamigos", expression:"Reposado", type:"Reposado", price:92.99, score:79, note:"Caramel, cocoa and vanilla-forward. Community rates the repo notably better than the blanco. Still flagged for sweetness by purists." },
+  { brand:"Casamigos", expression:"Añejo", type:"Añejo", price:92.99, score:80, note:"Adds barrel complexity. Best of the three Casamigos expressions per AMM community, though additive suspicion remains." },
+
+  // ESPOLÓN
+  { brand:"Espolón", expression:"Blanco", type:"Blanco", price:59.80, score:77, note:"Fruity, full-bodied and well-priced. A popular margarita base. AMM gives average marks — consistent but not complex enough to sip neat." },
+  { brand:"Espolón", expression:"Reposado", type:"Reposado", price:70, score:78, note:"Bold with vanilla and brown spice. A solid value pick per AMM reviewers. Better in cocktails than neat." },
+  { brand:"Espolón", expression:"Añejo", type:"Añejo", price:89.99, score:81, note:"11 months American oak + 2 months Wild Turkey bourbon barrels. Reddish-gold, caramel and vanilla. Good value aged expression." },
+
+  // JOSE CUERVO
+  { brand:"Jose Cuervo", expression:"Especial Silver", type:"Blanco", price:56, score:45, note:"World's best-selling tequila — AMM rates it harshly (45). Mixto, not 100% agave. Avoid for sipping; barely passable in a mixer." },
+  { brand:"Jose Cuervo", expression:"Especial Reposado", type:"Reposado", price:66.99, score:52, note:"Allegedly made the first Margarita. AMM scores (52) reflect mixto status and diffuser production. Not recommended by the community." },
+  { brand:"Jose Cuervo", expression:"Tradicional Silver", type:"Blanco", price:72.99, score:65, note:"100% blue agave unlike the Especial line. Noticeably better quality but below average on AMM. Better for mixing than sipping." },
+  { brand:"Jose Cuervo", expression:"Reserva de la Familia Platino", type:"Blanco", price:135.99, score:76, note:"Has received high external ratings (BTI 96/100). AMM community is more modest at 76. Clove, white pepper and cinnamon nose." },
+  { brand:"Jose Cuervo", expression:"Reserva de la Familia XA", type:"Extra Añejo", price:204.99, score:85, note:"AMM panel 82, community 85. World's first extra-añejo tequila. 3+ years in French and American oak. Surprisingly strong AMM score for a Cuervo." },
+
+  // 1800
+  { brand:"1800", expression:"Blanco (Silver)", type:"Blanco", price:77.95, score:67, note:"Double-distilled 100% blue agave. AMM rates it low (67): medicinal and lacking agave character. Mixing use only." },
+  { brand:"1800", expression:"Reposado", type:"Reposado", price:78, score:69, note:"6+ months in American and French oak. AMM scores it poorly — artificial-tasting. Not recommended for sipping neat." },
+  { brand:"1800", expression:"Añejo", type:"Añejo", price:91.99, score:76, note:"14+ months in French oak. Deep and oak-heavy. Scores improve over the blanco and repo — better for whiskey fans crossing into tequila." },
+  { brand:"1800", expression:"Cristalino", type:"Añejo", price:100, score:77, note:"Añejo cristalino — 16 months in American/French oak, port wine cask finish, then filtered clear. Panel 63, community 77. Artificial sweetness flagged by purists." },
+  { brand:"1800", expression:"Milenio", type:"Extra Añejo", price:344.99, score:84, note:"Won World's Best Tequila 2024. AMM panel 83, community 84. 40 months aged + French cognac barrel finish. The best 1800 expression by far." },
+
+  // EL JIMADOR
+  { brand:"El Jimador", expression:"Blanco", type:"Blanco", price:62, score:65, note:"Switched to diffuser production — AMM noticed badly (65). Crisp citrus but lacks agave depth. Pre-2001 bottles rated 80+. Not recommended." },
+  { brand:"El Jimador", expression:"Reposado", type:"Reposado", price:64.95, score:68, note:"2 months in American oak. AMM below-average marks. The diffuser production change hit quality significantly. Budget mixer." },
+  { brand:"El Jimador", expression:"Añejo", type:"Añejo", price:79.99, score:71, note:"Estate-bottled, copper colour, complex agave and wood. Rates slightly better than younger expressions on AMM, but still hindered by production method." },
+
+  // ALTOS
+  { brand:"Altos", expression:"Plata (Blanco)", type:"Blanco", price:59.99, score:81, note:"Recognised as a top margarita tequila by bartenders worldwide. AMM 81 — naturally smooth, herbal and citrus-forward. Great value." },
+  { brand:"Altos", expression:"Reposado", type:"Reposado", price:103.99, score:79, note:"Multi-award winner. Citrus, cooked agave and vanilla. AMM rates it slightly below the Plata. Still a quality expression." },
+
+  // CLASE AZUL
+  { brand:"Clase Azul", expression:"Reposado", type:"Reposado", price:375.99, score:84, note:"Hand-painted ceramic decanter. 8 months in oak. Community score (84) well above the panel (71). You're largely paying for the bottle art." },
+  { brand:"Clase Azul", expression:"Ultra Extra Añejo", type:"Extra Añejo", price:3800, score:83, note:"5 years in sherry casks, plated with precious metals. AMM community 83. Pure collector's status symbol — price far exceeds quality difference." },
+
+  // HERRADURA
+  { brand:"Herradura", expression:"Reposado", type:"Reposado", price:108.99, score:78, note:"The original reposado (1974). Aged 9 months. Vanilla, butter and cooked agave. AMM average — diffuser use has impacted scores." },
+  { brand:"Herradura", expression:"Añejo", type:"Añejo", price:112.99, score:80, note:"25 months — 13 beyond industry standard. Cooked agave, toasted oak and dried fruit. Community rates it a solid step above the reposado." },
+  { brand:"Herradura", expression:"Ultra Cristalino", type:"Añejo", price:183.99, score:81, note:"Añejo cristalino filtered over maple charcoal. Panel 66, community 81. Smooth and sweet but purists flag artificial notes from the filtration process." },
+
+  // CINCORO (Michael Jordan)
+  { brand:"Cincoro", expression:"Blanco", type:"Blanco", price:169.99, score:72, note:"Michael Jordan's tequila. AMM panel 61, community 72. Artificial sweetness and cake batter flagged. Heavy celebrity premium pricing." },
+  { brand:"Cincoro", expression:"Reposado", type:"Reposado", price:238.99, score:76, note:"AMM panel 64, community 76. Better than the blanco. Community notes sweetness and additives at this price point. Hard to justify." },
+  { brand:"Cincoro", expression:"Añejo", type:"Añejo", price:319.99, score:80, note:"AMM panel 63, community 80. Community rates it reasonably well — but 3× the cost of better alternatives. Compare before buying." },
+
+  // TEREMANA (Dwayne Johnson)
+  { brand:"Teremana", expression:"Blanco", type:"Blanco", price:76, score:73, note:"The Rock's tequila. AMM panel 72, community 73. Copper pot distilled, but reviewers note thin, sweet body with artificial notes." },
+  { brand:"Teremana", expression:"Reposado", type:"Reposado", price:98.99, score:74, note:"AMM panel 69, community 74. Community flags an odd sour note and artificial caramel. Decent for its price bracket." },
+  { brand:"Teremana", expression:"Añejo", type:"Añejo", price:109.99, score:77, note:"AMM panel 72, community 77. Best of the Teremana range. Most drinkable of the three — additive notes present but less prominent." },
+
+  // 818 (Kendall Jenner)
+  { brand:"818", expression:"Blanco", type:"Blanco", price:85, score:60, note:"Kendall Jenner's tequila. AMM panel 59, community 60. Reviewers describe vanilla bombs, cake batter and artificial sweetener. Poor AMM scores." },
+  { brand:"818", expression:"Reposado", type:"Reposado", price:111.99, score:65, note:"AMM panel 57, community 65. Described as 'ultra vanilla bomb with lactic funk and cardboard.' Strong additive suspicion across the range." },
+  { brand:"818", expression:"Añejo", type:"Añejo", price:115, score:69, note:"AMM panel 55, community 69. Best-scoring 818 expression but still below average. Far better options available at this price." },
+  { brand:"818", expression:"Eight Reserve (Añejo)", type:"Añejo", price:365.99, score:74, note:"AMM panel 57, community 74. Despite the premium flagship positioning, AMM is unimpressed. Reviewers note artificial flavours persist." },
+
+  // TEQUILA OCHO
+  { brand:"Tequila Ocho", expression:"Plata (Blanco)", type:"Blanco", price:125.99, score:87, note:"First vintage-designated tequila — labels the specific farm and harvest year. AMM panel 88, community 87. Terroir-driven, additive-free, highly regarded." },
+
+  // EL CRISTIANO
+  { brand:"El Cristiano", expression:"Blanco", type:"Blanco", price:129, score:78, note:"AMM panel 79, community 78. A lesser-known brand with solid production credentials. Worth exploring for blanco fans." },
+  { brand:"El Cristiano", expression:"Reposado", type:"Reposado", price:105.55, score:81, note:"AMM panel 81, community 81. Consistent marks all round — accessible premium expression from this boutique brand." },
+  { brand:"El Cristiano", expression:"Extra Añejo", type:"Extra Añejo", price:259.99, score:87, note:"AMM panel 80, community 87. One of the strongest expressions on this list. Well worth seeking out for extra añejo enthusiasts." },
+
+  // ROOSTER ROJO
+  { brand:"Rooster Rojo", expression:"Blanco", type:"Blanco", price:76.99, score:71, note:"AMM panel 69, community 71. 100% agave, classic profile — sweet then peppery spice. Decent mid-range blanco for the price." },
+
+  // KAH
+  { brand:"KAH", expression:"Blanco", type:"Blanco", price:79, score:69, note:"AMM panel 66, community 69. Day of the Dead skull bottle. Double-distilled 100% blue agave. Below average scores — buy it for the bottle design." },
+  { brand:"KAH", expression:"Reposado", type:"Reposado", price:98.99, score:68, note:"AMM panel 66, community 68. The bottle remains the star. Community scores are low — there are better reposados at this price." },
+
+  // MILAGRO
+  { brand:"Milagro", expression:"Leyenda Silver", type:"Blanco", price:79.99, score:73, note:"AMM panel 65, community 73. 100% blue agave, bright and fresh. Good margarita candidate. Better community than panel score." },
+
+  // MAESTRO DOBEL
+  { brand:"Maestro Dobel", expression:"50 Cristalino", type:"Extra Añejo", price:309.99, score:84, note:"Extra Añejo cristalino aged 3+ years in Eastern European & American oak, then filtered crystal clear. AMM panel 74, community 84. Big panel–community gap." },
+
+  // LA GRITONA
+  { brand:"La Gritona", expression:"Reposado", type:"Reposado", price:99.99, score:84, note:"AMM panel 80, community 84. Small Jalisco family distillery — very vegetal, no sweetness or heavy oak. A bartender cult favourite. Underrated." },
+
+  // SAN JOSE
+  { brand:"San Jose", expression:"Silver", type:"Blanco", price:51, score:56, note:"AMM community 56 (no panel rating). Not currently listed as active by regulators. Sweet, fruity and budget-friendly — mixing only." },
+  { brand:"San Jose", expression:"Gold", type:"Gold", price:53.09, score:61, note:"Gold/Joven — a blend of blanco and small amounts of aged spirit for colour and softness. AMM community 61. Budget tier mixing tequila." },
+
+  // PONCHOS / TEQUILA 125
+  { brand:"Ponchos", expression:"1910 Caramel", type:"Liqueur", price:78.99, score:null, note:"Tequila-based liqueur infused with caramel-toffee flavouring. AMM does not evaluate liqueurs. Dessert sipper or cocktail ingredient." },
+  { brand:"Tequila 125", expression:"Silver", type:"Blanco", price:44.99, score:null, note:"Budget house blanco. AMM does not carry this expression. Suited for mixing only." },
+  { brand:"Tequila 125", expression:"Gold", type:"Gold", price:43.19, score:null, note:"Gold/Joven — unaged blanco mixed with a small amount of añejo for colour. The most basic entry point in the category. AMM does not carry this." },
+  { brand:"Luna Hueca", expression:"Blanco", type:"Blanco", price:64.99, score:null, note:"Made in Jalisco Highlands, bottled in Australia. Traditional method. AMM does not carry this expression." },
+  { brand:"El Arquero", expression:"Blanco", type:"Blanco", price:89, score:null, note:"100% agave azul from Jalisco highlands, traditional distillation. Not found in AMM database." },
+
+  // CAZCABEL
+  { brand:"Cazcabel", expression:"Blanco", type:"Blanco", price:74.99, score:83, note:"AMM panel 74, community 83. Earthy NOM 1436 blanco with sweet agave, nuts, grass and pepper. Solid value for the price — good margarita base." },
+  { brand:"Cazcabel", expression:"Reposado", type:"Reposado", price:79.99, score:81, note:"AMM panel 72, community 81. 9–11 months in American oak. Dry, earthy agave balanced with vanilla and toasted oak. Hand-finished process." },
+  { brand:"Cazcabel", expression:"Añejo", type:"Añejo", price:55.80, score:null, note:"AMM data limited for this expression. Imported by Pinnacle Drinks. Check the AMM app for community scores." },
+  { brand:"Cazcabel", expression:"Coffee Liqueur", type:"Liqueur", price:70.99, score:null, note:"Tequila-based coffee liqueur using arabica beans from Soconusco, Mexico. Rich and roasted. AMM does not rate liqueurs." },
+  { brand:"Cazcabel", expression:"Coconut Liqueur", type:"Liqueur", price:67.99, score:null, note:"Cazcabel Blanco infused with Jalisco coconut. Sweet coconut on earthy agave. AMM does not rate liqueurs." },
+
+  // SIERRA
+  { brand:"Sierra", expression:"Blanco", type:"Blanco", price:64.99, score:35, note:"AMM panel score 35 — it's a mixto (not 100% agave) with neutral spirit. The iconic red sombrero bottle is Australia's introduction to tequila, but the community rating is harsh." },
+  { brand:"Sierra", expression:"Reposado", type:"Reposado", price:64.99, score:null, note:"AMM scores not captured for this run. 9 months in toasted oak. A mixto like the Silver — the AMM community rates it poorly but it's a common cocktail fixture. Check app." },
+  { brand:"Sierra", expression:"Tropical Chilli", type:"Liqueur", price:40, score:null, note:"Flavoured tequila with tropical chilli infusion. AMM does not evaluate flavoured expressions." },
+
+  // PANTALONES
+  { brand:"Pantalones", expression:"Blanco Organico", type:"Blanco", price:109.99, score:73, note:"AMM panel 71, community 73. 100% organic agave. Reviewers note it's inoffensive but not exciting — sweet cooked agave, honey and citrus notes." },
+  { brand:"Pantalones", expression:"Reposado Organico", type:"Reposado", price:119.99, score:78, note:"AMM panel 66, community 78. 9 months in American oak whisky barrels. Community is kinder than the panel. Caramel, vanilla and oak notes." },
+  { brand:"Pantalones", expression:"Añejo Organico", type:"Añejo", price:130.99, score:null, note:"AMM data limited. 15 months in American oak. Vanilla, butterscotch and brown sugar notes. Reviewers call it the best of the Pantalones range." },
+
+  // SOLENTO
+  { brand:"Solento", expression:"Blanco Organic", type:"Blanco", price:117.99, score:null, note:"AMM community data limited. Citrus-forward with smooth vanilla notes. Certified organic. Some reviewers find it sweet and simple, others love it neat over ice." },
+  { brand:"Solento", expression:"Reposado Organic", type:"Reposado", price:109, score:null, note:"AMM community data limited. 9 months in double-charred American oak. Caramel, citrus and cooked agave. Reviewers note good flavour but thin mouthfeel." },
+  { brand:"Solento", expression:"Añejo Organic", type:"Añejo", price:134.99, score:null, note:"AMM community data limited. 18 months in American oak. Maple, oak and butterscotch. Community generally positive — the best of the Solento range." },
+
+  // DON RAMÓN PLATINIUM
+  { brand:"Don Ramón", expression:"Platinium Plata", type:"Blanco", price:78, score:null, note:"100% blue agave blanco from the Platinium collection. AMM community data limited. Part of the Pierce Brosnan-fronted Platinium range." },
+  { brand:"Don Ramón", expression:"Platinium Reposado Cristalino", type:"Reposado", price:76.49, score:null, note:"Reposado cristalino filtered clear. AMM reviewer notes 'aroma of vanilla and citrus, no agave to be found — first flavor was marshmallow.' Community data very thin." },
+  { brand:"Don Ramón", expression:"Platinium Añejo Cristalino", type:"Añejo", price:89.09, score:null, note:"12 months in American/French oak, then filtered crystal clear. AMM data thin. 100% additive-free claim. Notes of nuts, cocoa, cinnamon and vanilla per the producer." },
+
+  // EL TORO
+  { brand:"El Toro", expression:"Blanco", type:"Blanco", price:60, score:null, note:"Hand-harvested blue agave from the town of Tequila, double distilled. AMM does not carry this brand. Good value everyday blanco." },
+  { brand:"El Toro", expression:"Jalapeño", type:"Liqueur", price:60, score:null, note:"Jalapeño-infused tequila. AMM does not evaluate flavoured expressions. Perfect for spicy margaritas." },
+  { brand:"El Toro", expression:"Coconut", type:"Liqueur", price:60, score:null, note:"Coconut-infused tequila liqueur. AMM does not evaluate flavoured expressions. Designed for tropical cocktails." },
+
+  // GHOST SPICY
+  { brand:"Ghost", expression:"Spicy Agave (Blanco)", type:"Blanco", price:79, score:null, note:"100% agave tequila infused with ghost pepper for clean, balanced heat. AMM does not carry this brand. Unique spicy-smooth profile — a novelty sipper." },
+
+
+
+
+
+  // DONA CELIA
+  { brand:"Doña Celia", expression:"Blanco", type:"Blanco", price:112.99, score:null, note:"100% blue agave in a hand-crafted ceramic Catrina bottle. AMM reviewer noted overwhelming sweet vanilla with no agave character and medicinal taste. Pretty bottle though." },
+
+  // 1965 RESERVA FLASK
+  { brand:"1965 Reserva", expression:"Flask Blanco", type:"Blanco", price:32.99, score:null, note:"100% agave blanco packaged in a reusable stainless steel hip flask. Sweet agave nose with pepper and spice. AMM does not carry this expression." },
+
+  // RESERVA DE MFM
+  { brand:"Reserva de MFM", expression:"Blanco", type:"Blanco", price:89, score:null, note:"100% blue agave, cooked in brick ovens, double distilled. Smooth and silky per producer notes. AMM does not carry this expression." },
+
+  // MEX CREAM / MANGO SHOTTA
+  { brand:"Mex", expression:"Mango Cream Tequila", type:"Liqueur", price:17.50, score:null, note:"Tequila-based mango cream liqueur. AMM does not evaluate liqueurs. Budget-tier flavoured product." },
+  { brand:"Mango Shotta", expression:"Tequila Liqueur", type:"Liqueur", price:4.99, score:null, note:"Mango and jalapeño flavoured tequila shot liqueur with lime, chamoy and Tajín. AMM does not evaluate flavoured liqueurs." },
+
+  // TEQUILA SOLDADA
+  { brand:"Tequila Soldada", expression:"Blanco", type:"Blanco", price:59.99, score:null, note:"Made in Jalisco beneath an old volcano. Agave handpicked by local Jimadores, cooked in traditional brick ovens, pot distilled. AMM does not carry this brand." },
+
+  // CINCA COCONUT
+  { brand:"Cinca", expression:"Tequila Coconut", type:"Liqueur", price:70, score:null, note:"Four-generation family recipe. Pure agave spirit blended with coconut. AMM does not evaluate flavoured/infused tequila expressions." },
+];
+
+function scoreClass(s) {
+  if (s===null) return 'score-na';
+  if (s>=86) return 'score-excellent';
+  if (s>=80) return 'score-good';
+  if (s>=70) return 'score-average';
+  return 'score-low';
+}
+function pillClass(t) {
+  if (t==='Blanco') return 'pill-blanco';
+  if (t==='Reposado') return 'pill-reposado';
+  if (t==='Extra Añejo') return 'pill-extra';
+  if (t==='Gold') return 'pill-gold';
+  if (t==='Liqueur') return 'pill-liqueur';
+  return 'pill-anejo';
+}
+function scoreLabel(s) { return s===null ? 'N/R' : s; }
+
+let currentFilter='all', currentSort='brand';
+
+function applySort(rows) {
+  if (currentSort==='brand')       rows.sort((a,b)=>a.brand.localeCompare(b.brand)||a.expression.localeCompare(b.expression));
+  else if (currentSort==='type')   rows.sort((a,b)=>a.type.localeCompare(b.type)||a.brand.localeCompare(b.brand));
+  else if (currentSort==='score-desc') rows.sort((a,b)=>(b.score??-1)-(a.score??-1));
+  else if (currentSort==='score-asc')  rows.sort((a,b)=>(a.score??999)-(b.score??999));
+  else if (currentSort==='price-asc')  rows.sort((a,b)=>a.price-b.price);
+  else if (currentSort==='price-desc') rows.sort((a,b)=>b.price-a.price);
+  return rows;
+}
+
+function updateHeaders() {
+  document.querySelectorAll('thead th[data-sort]').forEach(th => {
+    th.classList.remove('sort-active');
+    const arrow = th.querySelector('.sort-arrow');
+    if (!arrow) return;
+    const col = th.dataset.sort;
+    const isActive = currentSort === col ||
+      (col==='price' && (currentSort==='price-asc'||currentSort==='price-desc')) ||
+      (col==='score' && (currentSort==='score-asc'||currentSort==='score-desc'));
+    if (isActive) {
+      th.classList.add('sort-active');
+      arrow.textContent = (currentSort.endsWith('-asc')) ? ' ↑' : ' ↓';
+    } else {
+      arrow.textContent = ' ↕';
+    }
+  });
+  document.getElementById('sortSelect').value = currentSort;
+}
+
+function renderTable() {
+  const tbody = document.getElementById('tbody');
+  const rows = applySort([...data]);
+  let visible = 0;
+  tbody.innerHTML = rows.map(r => {
+    const show = currentFilter==='all' || r.type===currentFilter;
+    if (show) visible++;
+    return `<tr class="${show?'':'hidden'}">
+      <td><span class="brand-name">${r.brand}</span><span class="expression">${r.expression}</span></td>
+      <td><span class="type-pill ${pillClass(r.type)}">${r.type}</span></td>
+      <td class="price-cell">$${r.price.toFixed(2)}</td>
+      <td class="score-cell"><span class="score-badge ${scoreClass(r.score)}">${scoreLabel(r.score)}</span></td>
+      <td class="note-cell">${r.note}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('visCount').textContent = visible;
+  updateHeaders();
+}
+
+// Clickable column headers
+document.querySelectorAll('thead th[data-sort]').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.sort;
+    if (col === 'price') {
+      currentSort = (currentSort === 'price-asc') ? 'price-desc' : 'price-asc';
+    } else if (col === 'score') {
+      currentSort = (currentSort === 'score-desc') ? 'score-asc' : 'score-desc';
+    } else {
+      currentSort = col;
+    }
+    renderTable();
+  });
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderTable();
+  });
+});
+
+document.getElementById('sortSelect').addEventListener('change', e => {
+  currentSort = e.target.value;
+  renderTable();
+});
+
+renderTable();
+</script>
+</body>
+</html>
