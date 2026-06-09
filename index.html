@@ -110,9 +110,37 @@
 
   .note-cell { font-size:12px; color:var(--text-muted); line-height:1.55; max-width:280px; min-width:180px; font-weight:500; }
 
+  /* Mobile: hide note column, show tap-to-expand instead */
   @media (max-width:700px) {
     header, .hero, .controls, .table-wrap, .legend, .count-bar { padding-left:12px; padding-right:12px; }
     .note-cell { display:none; }
+    thead th:last-child { display:none; }
+
+    /* Tap indicator on brand cell */
+    .brand-cell-wrap { cursor:pointer; }
+    .tap-hint { display:inline-block; font-size:9px; font-weight:700; color:var(--dm-green); letter-spacing:0.5px; margin-top:4px; text-transform:uppercase; }
+
+    /* Expandable note row */
+    tr.note-row td {
+      padding:0 12px;
+      background:#F0F8F4;
+      border-left:3px solid var(--dm-green);
+      border-radius:0 0 6px 6px;
+    }
+    tr.note-row.collapsed td { display:none; }
+    tr.note-row.expanded td {
+      display:block;
+      padding:10px 12px;
+      font-size:12px;
+      color:var(--text-muted);
+      line-height:1.6;
+      font-weight:500;
+    }
+  }
+
+  @media (min-width:701px) {
+    .tap-hint { display:none; }
+    tr.note-row { display:none; }
   }
 </style>
 </head>
@@ -410,19 +438,36 @@ function renderTable() {
   const tbody = document.getElementById('tbody');
   const rows = applySort([...data]);
   let visible = 0;
-  tbody.innerHTML = rows.map(r => {
+  tbody.innerHTML = rows.map((r, i) => {
     const show = currentFilter==='all' || r.type===currentFilter;
     if (show) visible++;
-    return `<tr class="${show?'':'hidden'}">
-      <td><span class="brand-name">${r.brand}</span><span class="expression">${r.expression}</span></td>
+    return `<tr class="${show?'':'hidden'}" data-note-id="note-${i}" onclick="toggleNote('note-${i}')">
+      <td><span class="brand-name">${r.brand}</span><span class="expression">${r.expression}</span><span class="tap-hint">tap for note ▾</span></td>
       <td><span class="type-pill ${pillClass(r.type)}">${r.type}</span></td>
       <td class="price-cell">$${r.price.toFixed(2)}</td>
       <td class="score-cell"><span class="score-badge ${scoreClass(r.score)}">${scoreLabel(r.score)}</span></td>
       <td class="note-cell">${r.note}</td>
+    </tr>
+    <tr id="note-${i}" class="note-row collapsed ${show?'':'hidden'}">
+      <td colspan="4">${r.note}</td>
     </tr>`;
   }).join('');
   document.getElementById('visCount').textContent = visible;
   updateHeaders();
+}
+
+function toggleNote(id) {
+  // Only act on mobile
+  if (window.innerWidth > 700) return;
+  const noteRow = document.getElementById(id);
+  if (!noteRow) return;
+  const isExpanded = noteRow.classList.contains('expanded');
+  noteRow.classList.toggle('expanded', !isExpanded);
+  noteRow.classList.toggle('collapsed', isExpanded);
+  // Update tap hint arrow
+  const dataRow = document.querySelector(`[data-note-id="${id}"]`);
+  const hint = dataRow?.querySelector('.tap-hint');
+  if (hint) hint.textContent = isExpanded ? 'tap for note ▾' : 'tap to close ▴';
 }
 
 // Clickable column headers
