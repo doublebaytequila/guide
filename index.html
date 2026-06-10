@@ -111,9 +111,14 @@
   .score-na        { background:var(--score-na-bg); color:var(--score-na-text); font-size:11px; font-weight:700; }
 
   .note-cell { font-size:12px; color:var(--text-muted); line-height:1.55; max-width:280px; min-width:180px; font-weight:500; }
+  .note-part { display:block; margin-bottom:4px; }
+  .note-part:last-child { margin-bottom:0; }
+  .note-label { color:var(--text); font-weight:800; }
+  .tap-hint { display:none; }
+  tr.note-row { display:none; }
 
   /* Mobile: hide note column, show tap-to-expand instead */
-  @media (max-width:700px) {
+  @media (max-width:700px) and (orientation:portrait) {
     header, .hero, .controls, .table-wrap, .legend, .count-bar { padding-left:12px; padding-right:12px; }
     .note-cell { display:none; }
     thead th:last-child { display:none; }
@@ -132,6 +137,7 @@
     .tap-hint { display:inline-block; font-size:9px; font-weight:700; color:var(--dm-green); letter-spacing:0.5px; margin-top:4px; text-transform:uppercase; }
 
     /* Expandable note row */
+    tr.note-row { display:table-row; }
     tr.note-row td {
       padding:0 12px;
       background:#F0F8F4;
@@ -149,9 +155,65 @@
     }
   }
 
-  @media (min-width:701px) {
-    .tap-hint { display:none; }
-    tr.note-row { display:none; }
+  /* TABS */
+  .tab-nav { background:var(--dm-green-dark); display:flex; padding:0 24px; gap:4px; }
+  .tab-btn { font-family:'Montserrat',sans-serif; font-size:12px; font-weight:700; color:rgba(255,255,255,0.65); background:transparent; border:none; padding:14px 20px; cursor:pointer; border-bottom:3px solid transparent; letter-spacing:0.5px; text-transform:uppercase; transition:all 0.2s; }
+  .tab-btn:hover { color:#fff; }
+  .tab-btn.active { color:#fff; border-bottom-color:#fff; }
+
+  /* TAB PANELS */
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+
+  /* DID YOU KNOW */
+  .did-you-know { background:rgba(0,0,0,0.2); border-left:3px solid rgba(255,255,255,0.4); margin-top:16px; padding:10px 14px; border-radius:0 4px 4px 0; cursor:pointer; }
+  .dyk-label { font-size:9px; font-weight:800; color:rgba(255,255,255,0.6); letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; }
+  .dyk-text { font-size:12px; color:rgba(255,255,255,0.9); font-weight:500; line-height:1.5; }
+  .dyk-hint { font-size:9px; color:rgba(255,255,255,0.4); margin-top:4px; }
+
+  /* TEQUILA 101 */
+  .content-wrap { padding:24px; max-width:900px; }
+  .section-title { font-size:18px; font-weight:800; color:var(--dm-green-dark); margin-bottom:6px; letter-spacing:-0.3px; }
+  .section-sub { font-size:12px; color:var(--text-muted); font-weight:500; margin-bottom:24px; }
+
+  .process-steps { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:32px; }
+  .step-card { background:#fff; border-radius:8px; padding:16px; flex:1; min-width:140px; box-shadow:0 1px 4px rgba(0,0,0,0.07); border-top:3px solid var(--dm-green); }
+  .step-num { font-size:10px; font-weight:800; color:var(--dm-green); letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
+  .step-title { font-size:13px; font-weight:800; color:var(--text); margin-bottom:4px; }
+  .step-desc { font-size:11px; color:var(--text-muted); line-height:1.55; font-weight:500; }
+
+  .category-cards { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:32px; }
+  .cat-card { background:#fff; border-radius:8px; padding:16px; flex:1; min-width:160px; box-shadow:0 1px 4px rgba(0,0,0,0.07); }
+  .cat-pill-wrap { margin-bottom:8px; }
+  .cat-title { font-size:13px; font-weight:800; color:var(--text); margin-bottom:4px; }
+  .cat-age { font-size:10px; font-weight:700; color:var(--dm-green); margin-bottom:6px; text-transform:uppercase; letter-spacing:1px; }
+  .cat-desc { font-size:11px; color:var(--text-muted); line-height:1.55; font-weight:500; }
+
+  .additive-grid { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:32px; }
+  .additive-card { background:#fff; border-radius:8px; padding:14px; flex:1; min-width:160px; box-shadow:0 1px 4px rgba(0,0,0,0.07); border-left:3px solid #e53935; }
+  .additive-name { font-size:12px; font-weight:800; color:#c62828; margin-bottom:4px; }
+  .additive-desc { font-size:11px; color:var(--text-muted); line-height:1.55; font-weight:500; }
+
+  .amm-explainer { background:#fff; border-radius:8px; padding:20px; box-shadow:0 1px 4px rgba(0,0,0,0.07); border-left:4px solid var(--dm-green); margin-bottom:32px; }
+  .amm-explainer p { font-size:12px; color:var(--text-muted); line-height:1.7; font-weight:500; margin-bottom:8px; }
+  .amm-explainer p:last-child { margin-bottom:0; }
+  .amm-explainer strong { color:var(--text); }
+
+  /* DISTILLERY FAMILY TREE */
+  .nom-grid { display:flex; flex-direction:column; gap:16px; }
+  .nom-card { background:#fff; border-radius:8px; padding:18px; box-shadow:0 1px 4px rgba(0,0,0,0.07); }
+  .nom-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap; }
+  .nom-badge { background:var(--dm-green); color:#fff; font-size:10px; font-weight:800; padding:4px 10px; border-radius:4px; letter-spacing:1px; white-space:nowrap; }
+  .nom-name { font-size:14px; font-weight:800; color:var(--text); }
+  .nom-region { font-size:11px; color:var(--text-muted); font-weight:500; }
+  .nom-brands { display:flex; flex-wrap:wrap; gap:8px; }
+  .nom-brand-tag { background:var(--dm-green-pale); color:var(--dm-green-dark); font-size:11px; font-weight:700; padding:5px 12px; border-radius:20px; border:1px solid var(--dm-green-mid); }
+  .nom-fact { font-size:11px; color:var(--text-muted); font-weight:500; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); line-height:1.55; }
+
+  @media (max-width:700px) {
+    .tab-btn { font-size:10px; padding:12px 12px; letter-spacing:0; }
+    .content-wrap { padding:16px; }
+    .process-steps, .category-cards, .additive-grid { flex-direction:column; }
   }
 </style>
 </head>
@@ -166,7 +228,21 @@
 <div class="hero">
   <h1>Tequila Range — Agave Matchmaker Ratings</h1>
   <p>All expressions from the current range, compared against the Agave Matchmaker community score</p>
+  <div class="did-you-know" onclick="nextFact()">
+    <div class="dyk-label">Did you know?</div>
+    <div class="dyk-text" id="dykText"></div>
+    <div class="dyk-hint">tap to see another fact</div>
+  </div>
 </div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="range">Our Range</button>
+  <button class="tab-btn" data-tab="learn">Tequila 101</button>
+  <button class="tab-btn" data-tab="tree">Distillery Tree</button>
+</div>
+
+<!-- RANGE TAB -->
+<div class="tab-panel active" id="tab-range">
 
 <div class="legend">
   <div class="legend-row">
@@ -205,6 +281,293 @@
 </table>
 </div>
 
+</div><!-- end range tab -->
+
+<!-- TEQUILA 101 TAB -->
+<div class="tab-panel" id="tab-learn">
+<div class="content-wrap">
+
+  <div class="section-title">How Tequila is Made</div>
+  <div class="section-sub">From agave plant to bottle — the full journey</div>
+  <div class="process-steps">
+    <div class="step-card">
+      <div class="step-num">Step 1</div>
+      <div class="step-title">Harvesting</div>
+      <div class="step-desc">Jimadores hand-harvest Blue Weber agave after 7–12 years of growth, cutting the piña (heart) from the plant. Each piña can weigh 40–90kg.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Step 2</div>
+      <div class="step-title">Cooking</div>
+      <div class="step-desc">Piñas are slow-cooked in traditional brick ovens or autoclaves (pressure cookers) for 24–72 hours, converting starches to fermentable sugars.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Step 3</div>
+      <div class="step-title">Extraction</div>
+      <div class="step-desc">Cooked agave is crushed to extract the juice (aguamiel). Traditional tahona stone wheels or modern roller mills are used — tahona is slower but gives more flavour.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Step 4</div>
+      <div class="step-title">Fermentation</div>
+      <div class="step-desc">Agave juice ferments in wooden vats or steel tanks for 1–7 days as yeast converts sugars to alcohol, creating a low-ABV wash of around 4–7%.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Step 5</div>
+      <div class="step-title">Distillation</div>
+      <div class="step-desc">Typically double-distilled in copper pot stills or stainless steel column stills to around 55% ABV, then diluted with water to bottling strength (usually 38–40%).</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">Step 6</div>
+      <div class="step-title">Ageing</div>
+      <div class="step-desc">Depending on the category, tequila rests in oak barrels from a few months to several years. Some goes straight to bottle as Blanco.</div>
+    </div>
+  </div>
+
+  <div class="section-title">The Categories</div>
+  <div class="section-sub">What the different styles actually mean</div>
+  <div class="category-cards">
+    <div class="cat-card">
+      <div class="cat-pill-wrap"><span class="type-pill pill-blanco" style="margin-top:0">Blanco</span></div>
+      <div class="cat-age">Unaged (0–2 months)</div>
+      <div class="cat-desc">Bottled immediately after distillation or rested briefly in stainless steel. The purest expression of agave — what you recommend to someone who wants to taste the actual spirit.</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-pill-wrap"><span class="type-pill pill-reposado" style="margin-top:0">Reposado</span></div>
+      <div class="cat-age">2–11 months in oak</div>
+      <div class="cat-desc">Rested in oak barrels — the legal minimum is 2 months, but quality producers go much longer. Picks up vanilla and caramel while keeping agave character. The most versatile category.</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-pill-wrap"><span class="type-pill pill-anejo" style="margin-top:0">Añejo</span></div>
+      <div class="cat-age">1–3 years in oak</div>
+      <div class="cat-desc">Aged in barrels under 600 litres. Deeper colour, richer flavour — oak, vanilla and dried fruit dominate. Great for customers who enjoy whisky or brandy.</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-pill-wrap"><span class="type-pill pill-extra" style="margin-top:0">Extra Añejo</span></div>
+      <div class="cat-age">3+ years in oak</div>
+      <div class="cat-desc">A category introduced in 2006. Deep amber colour, complex and whisky-like. The most premium sipping category — recommend to whisky lovers or special occasion buyers.</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-pill-wrap"><span class="type-pill pill-gold" style="margin-top:0">Gold / Joven</span></div>
+      <div class="cat-age">Unaged blend</div>
+      <div class="cat-desc">A blanco mixed with a small amount of aged spirit (or caramel colouring) for colour and softness. Typically the lowest quality category — best used for mixing only.</div>
+    </div>
+  </div>
+
+  <div class="section-title">The Additives Issue</div>
+  <div class="section-sub">Why AMM community scores sometimes differ wildly from marketing</div>
+  <div class="amm-explainer">
+    <p>Mexican tequila law permits up to <strong>1% by volume of additives</strong> without any disclosure requirement on the label. This is why a tequila can legally claim "100% agave" while still containing flavouring agents. The AMM community rates the liquid in the glass, so fake vanilla, sweetener, glycerin-smoothness and shortcut production usually get punished.</p>
+    <p>Tequilas widely suspected or confirmed to use additives include <strong>Casamigos, 818, Cincoro, Don Julio, Clase Azul Plata</strong> and many other well-known premium brands. Additive-free producers include <strong>Fortaleza, Tequila Ocho, El Cristiano, La Gritona</strong> and Cazcabel. A beautiful bottle or celebrity name does not fix thin agave character.</p>
+  </div>
+  <div class="additive-grid">
+    <div class="additive-card">
+      <div class="additive-name">Glycerin</div>
+      <div class="additive-desc">Adds a thick, oily mouthfeel and perceived smoothness. The most commonly used additive — gives that "creamy" texture many popular brands are known for.</div>
+    </div>
+    <div class="additive-card">
+      <div class="additive-name">Caramel Colour</div>
+      <div class="additive-desc">Deepens the colour to make a tequila look more aged than it is. Used widely in Gold/Joven and some reposados.</div>
+    </div>
+    <div class="additive-card">
+      <div class="additive-name">Vanilla Extract</div>
+      <div class="additive-desc">Adds sweet vanilla notes without the time needed to develop them naturally in oak. A telltale sign is vanilla that seems too prominent for the age stated.</div>
+    </div>
+    <div class="additive-card">
+      <div class="additive-name">Oak Extract</div>
+      <div class="additive-desc">Mimics barrel ageing flavours — smoky, woody notes — without the time or cost of actual ageing. Common in cheaper aged expressions.</div>
+    </div>
+  </div>
+
+  <div class="section-title">What is the AMM Score?</div>
+  <div class="section-sub">Understanding Agave Matchmaker ratings</div>
+  <div class="amm-explainer">
+    <p><strong>Agave Matchmaker (AMM)</strong> is an independent community platform where enthusiasts and experts blind-taste and rate agave spirits. It's widely regarded as the most honest scoring system for tequila because it's free from brand sponsorship or marketing influence.</p>
+    <p>Each spirit receives a <strong>Panel score</strong> (from expert tasters) and a <strong>Community score</strong> (from the wider public). The scores shown in this guide are the <strong>Community scores</strong> — a useful real-world indicator of how a tequila actually drinks.</p>
+    <p>A score of <strong>86+</strong> is considered excellent. <strong>80–85</strong> is good. <strong>70–79</strong> is average. Below 70 indicates the community finds it lacking — often due to additives, diffuser production or poor agave quality. <strong>N/R</strong> means the brand isn't yet in the AMM database.</p>
+  </div>
+
+</div>
+</div><!-- end learn tab -->
+
+<!-- DISTILLERY FAMILY TREE TAB -->
+<div class="tab-panel" id="tab-tree">
+<div class="content-wrap">
+  <div class="section-title">Distillery Family Tree</div>
+  <div class="section-sub">Many brands you think are separate actually share the same distillery — a great talking point with customers</div>
+
+  <div class="nom-grid">
+
+    <div class="nom-card">
+      <div class="nom-header">
+        <span class="nom-badge">NOM 1416</span>
+        <div>
+          <div class="nom-name">Casa Tradición</div>
+          <div class="nom-region">Jesús María, Los Altos, Jalisco</div>
+        </div>
+      </div>
+      <div class="nom-brands">
+        <span class="nom-brand-tag">Clase Azul Plata</span>
+        <span class="nom-brand-tag">Casamigos</span>
+        <span class="nom-brand-tag">Avión</span>
+      </div>
+      <div class="nom-fact">Three of the most famous celebrity and luxury brands — Clase Azul, George Clooney's Casamigos, and Avión — all come out of the same distillery in Jesús María. The hand-painted Clase Azul bottle is made nearby in Santa María Canchesdé.</div>
+    </div>
+
+    <div class="nom-card">
+      <div class="nom-header">
+        <span class="nom-badge">NOM 1119</span>
+        <div>
+          <div class="nom-name">Casa Cuervo (La Rojeña)</div>
+          <div class="nom-region">Tequila, Jalisco — est. 1758</div>
+        </div>
+      </div>
+      <div class="nom-brands">
+        <span class="nom-brand-tag">Jose Cuervo Especial</span>
+        <span class="nom-brand-tag">Jose Cuervo Tradicional</span>
+        <span class="nom-brand-tag">Jose Cuervo Reserva</span>
+        <span class="nom-brand-tag">1800 Tequila</span>
+        <span class="nom-brand-tag">Maestro Dobel</span>
+      </div>
+      <div class="nom-fact">La Rojeña is Latin America's oldest active distillery, operating since 1758. The Beckmann family (Cuervo descendants) also owns 1800 and Maestro Dobel — all produced under the same roof despite their very different price points and branding.</div>
+    </div>
+
+    <div class="nom-card">
+      <div class="nom-header">
+        <span class="nom-badge">NOM 1438</span>
+        <div>
+          <div class="nom-name">Destiladora del Valle de Tequila</div>
+          <div class="nom-region">Tequila, Jalisco</div>
+        </div>
+      </div>
+      <div class="nom-brands">
+        <span class="nom-brand-tag">Cincoro</span>
+        <span class="nom-brand-tag">Don Julio</span>
+      </div>
+      <div class="nom-fact">Don Julio and Michael Jordan's Cincoro are both produced at the same Jalisco distillery. Don Julio González founded his operation here in 1942 — the brand is now owned by Diageo.</div>
+    </div>
+
+    <div class="nom-card">
+      <div class="nom-header">
+        <span class="nom-badge">NOM 1111</span>
+        <div>
+          <div class="nom-name">Hacienda Patrón</div>
+          <div class="nom-region">Atotonilco el Alto, Jalisco</div>
+        </div>
+      </div>
+      <div class="nom-brands">
+        <span class="nom-brand-tag">Patrón Silver</span>
+        <span class="nom-brand-tag">Patrón Reposado</span>
+        <span class="nom-brand-tag">Patrón Añejo</span>
+        <span class="nom-brand-tag">Patrón El Alto</span>
+        <span class="nom-brand-tag">Patrón El Cielo</span>
+      </div>
+      <div class="nom-fact">Hacienda Patrón is one of the most visited distilleries in Jalisco. It uniquely uses both traditional tahona stone wheels and modern roller mills — the El Alto and El Cielo expressions are tahona-exclusive, which is why they score better on AMM.</div>
+    </div>
+
+    <div class="nom-card">
+      <div class="nom-header">
+        <span class="nom-badge">NOM 1493</span>
+        <div>
+          <div class="nom-name">Casa Herradura (Brown-Forman)</div>
+          <div class="nom-region">Amatitán, Jalisco — est. 1870</div>
+        </div>
+      </div>
+      <div class="nom-brands">
+        <span class="nom-brand-tag">Herradura Reposado</span>
+        <span class="nom-brand-tag">Herradura Añejo</span>
+        <span class="nom-brand-tag">Herradura Ultra</span>
+        <span class="nom-brand-tag">El Jimador</span>
+      </div>
+      <div class="nom-fact">Casa Herradura invented the reposado category in 1974 and the extra añejo in 1962. El Jimador is their budget brand — same distillery, but switched to diffuser extraction to cut costs, which is why AMM scores dropped sharply.</div>
+    </div>
+
+    <div class="nom-card">
+      <div class="nom-header">
+        <span class="nom-badge">NOM 1530</span>
+        <div>
+          <div class="nom-name">Tequila Fortaleza</div>
+          <div class="nom-region">Town of Tequila, Jalisco — est. 1999 (restored)</div>
+        </div>
+      </div>
+      <div class="nom-brands">
+        <span class="nom-brand-tag">Fortaleza Blanco</span>
+        <span class="nom-brand-tag">Fortaleza Reposado</span>
+        <span class="nom-brand-tag">Fortaleza Añejo</span>
+      </div>
+      <div class="nom-fact">The Sauza family (of Sauza Tequila fame) sold their brand but kept the original distillery. Guillermo Erickson Sauza restored it in 1999 and produces Fortaleza entirely on-site using a 100-year-old stone tahona — explaining why it's the highest-rated brand in our range.</div>
+    </div>
+
+    <div class="nom-card">
+      <div class="nom-header">
+        <span class="nom-badge">NOM 1579</span>
+        <div>
+          <div class="nom-name">San Nicolás (Campari Group)</div>
+          <div class="nom-region">Los Altos, Jalisco</div>
+        </div>
+      </div>
+      <div class="nom-brands">
+        <span class="nom-brand-tag">Espolón Blanco</span>
+        <span class="nom-brand-tag">Espolón Reposado</span>
+        <span class="nom-brand-tag">Espolón Añejo</span>
+        <span class="nom-brand-tag">Altos Plata</span>
+        <span class="nom-brand-tag">Altos Reposado</span>
+      </div>
+      <div class="nom-fact">Espolón and Altos — both owned by Campari Group — are made at the same acclaimed San Nicolás distillery in the Los Altos highlands. Both consistently perform well with bartenders worldwide despite being mid-range priced.</div>
+    </div>
+
+    <div class="nom-card">
+      <div class="nom-header">
+        <span class="nom-badge">NOM 1436</span>
+        <div>
+          <div class="nom-name">Destiladora González Bañuelos</div>
+          <div class="nom-region">Arandas, Los Altos, Jalisco</div>
+        </div>
+      </div>
+      <div class="nom-brands">
+        <span class="nom-brand-tag">Cazcabel Blanco</span>
+        <span class="nom-brand-tag">Cazcabel Reposado</span>
+        <span class="nom-brand-tag">Cazcabel Añejo</span>
+      </div>
+      <div class="nom-fact">Cazcabel is produced by UK-based Proof Drinks at this Highlands distillery. One of the better-value brands in the range — the community scores reflect genuine quality, with the blanco being particularly well-regarded.</div>
+    </div>
+
+    <div class="nom-card">
+      <div class="nom-header">
+        <span class="nom-badge">NOM 1499</span>
+        <div>
+          <div class="nom-name">El Cristiano Distillery</div>
+          <div class="nom-region">Jalisco</div>
+        </div>
+      </div>
+      <div class="nom-brands">
+        <span class="nom-brand-tag">El Cristiano Blanco</span>
+        <span class="nom-brand-tag">El Cristiano Reposado</span>
+        <span class="nom-brand-tag">El Cristiano Extra Añejo</span>
+      </div>
+      <div class="nom-fact">One of the hidden gems in the range. El Cristiano's Extra Añejo scores 87 on AMM — making it the joint-highest rated expression we stock alongside Tequila Ocho Plata. Unknown to most customers but worth every cent.</div>
+    </div>
+
+    <div class="nom-card">
+      <div class="nom-header">
+        <span class="nom-badge">Independent / Boutique</span>
+        <div>
+          <div class="nom-name">Single-brand distilleries</div>
+          <div class="nom-region">Various, Jalisco</div>
+        </div>
+      </div>
+      <div class="nom-brands">
+        <span class="nom-brand-tag">Tequila Ocho (NOM 1474)</span>
+        <span class="nom-brand-tag">La Gritona (NOM 1558)</span>
+        <span class="nom-brand-tag">Teremana (NOM 1613)</span>
+        <span class="nom-brand-tag">818 (NOM 1440)</span>
+        <span class="nom-brand-tag">Rooster Rojo (NOM 1109)</span>
+      </div>
+      <div class="nom-fact">These brands each have their own dedicated distillery. Tequila Ocho (NOM 1474) is notable for its vintage single-estate model — each batch comes from a different agave field. La Gritona (NOM 1558) is an all-female production team in the Highlands.</div>
+    </div>
+
+  </div>
+</div>
+</div><!-- end tree tab -->
+
 <script>
 const data = [
   // FORTALEZA
@@ -213,11 +576,11 @@ const data = [
   { brand:"Fortaleza", expression:"Añejo", type:"Añejo", score:91, note:"Aged minimum 2 years in small ex-bourbon barrels at the historic Sauza estate. Rich caramel, dark chocolate, roasted agave and a remarkably silky, long finish." },
 
   // DON JULIO
-  { brand:"Don Julio", expression:"Blanco", type:"Blanco", score:77, note:"Founded in 1942 by Don Julio González in the Highlands of Jalisco. Fresh lime citrus, light pepper and subtle sweet agave. Clean and versatile cocktail base." },
-  { brand:"Don Julio", expression:"Reposado", type:"Reposado", score:81, note:"Aged 8 months in American white oak at the La Primavera distillery, Jalisco Highlands. Warm vanilla, toasted oak, dried fruit and a gentle spice finish." },
-  { brand:"Don Julio", expression:"Añejo", type:"Añejo", score:83, note:"Rested 18 months in American white oak — well beyond the legal minimum. Butterscotch, dried apricot, vanilla and a smooth, oak-led finish." },
-  { brand:"Don Julio", expression:"1942 Añejo", type:"Añejo", score:85, note:"Created in 2002 to mark Don Julio's 60th anniversary. Aged 24–30 months in small oak barrels. Rich caramel, toffee, vanilla bean and hints of dark cherry." },
-  { brand:"Don Julio", expression:"Rosado", type:"Reposado", score:74, note:"Reposado finished in Ruby Port casks from Portugal's Douro Valley — a first for the category. Delicate pink colour, dried red berries, caramel and a subtly sweet finish." },
+  { brand:"Don Julio", expression:"Blanco", type:"Blanco", score:77, note:"Founded in 1942 by Don Julio González in the Highlands of Jalisco. Fresh lime citrus, light pepper and subtle sweet agave. Clean and versatile, though the softness can read a little polished rather than fully raw." },
+  { brand:"Don Julio", expression:"Reposado", type:"Reposado", score:81, note:"Aged 8 months in American white oak. Warm vanilla, toasted oak and dried fruit, with the kind of rounded sweetness that some AMM drinkers read as additive-adjacent rather than purely barrel-led." },
+  { brand:"Don Julio", expression:"Añejo", type:"Añejo", score:83, note:"Rested 18 months in American white oak. Butterscotch, dried apricot and vanilla are enjoyable, but the very smooth, sweet oak profile is why additive-sensitive drinkers approach it with caution." },
+  { brand:"Don Julio", expression:"1942 Añejo", type:"Añejo", score:85, note:"Created in 2002 to mark Don Julio's 60th anniversary. Polished caramel, toffee and vanilla bean make it crowd-pleasing, but the luxury sweetness feels additive-suspected compared with more agave-driven añejos." },
+  { brand:"Don Julio", expression:"Rosado", type:"Reposado", score:74, note:"Reposado finished in Ruby Port casks from Portugal's Douro Valley. Pretty pink colour and red-berry sweetness, but it reads more styled and additive-suspected than serious. AMM scores it accordingly." },
 
   // PATRÓN
   { brand:"Patrón", expression:"Silver", type:"Blanco", score:74, note:"Produced at Hacienda Patrón in Atotonilco, Jalisco using a mix of tahona and roller mill. Crisp citrus, light agave and mild pepper. The original premium-shelf blanco." },
@@ -227,9 +590,9 @@ const data = [
   { brand:"Patrón", expression:"El Cielo", type:"Blanco", score:77, note:"The world's first four-times distilled blanco tequila, chill filtered and presented in a crystal decanter. Delicate floral aromas, sweet cooked agave and an ultra-clean, light finish." },
 
   // CASAMIGOS
-  { brand:"Casamigos", expression:"Blanco", type:"Blanco", score:74, note:"Co-founded by George Clooney in Jalisco, now owned by Diageo. Slow-roasted in brick ovens, fermented 80 hours. Vanilla cream, citrus and sweet agave — very approachable." },
-  { brand:"Casamigos", expression:"Reposado", type:"Reposado", score:79, note:"Rested 7 months in American white oak — longer than most reposados. Caramel, smooth cocoa, vanilla and a soft, warm oak finish. The best of the Casamigos range." },
-  { brand:"Casamigos", expression:"Añejo", type:"Añejo", score:80, note:"Aged 14 months in American white oak barrels. Rich butterscotch, mocha, warm spice and a velvety smooth finish. The most complex expression in the lineup." },
+  { brand:"Casamigos", expression:"Blanco", type:"Blanco", score:74, note:"Co-founded by George Clooney, now owned by Diageo. Sweet vanilla-cream profile makes it easy for beginners, but it is widely additive-suspected; the agave gets buried under dessert-like smoothness." },
+  { brand:"Casamigos", expression:"Reposado", type:"Reposado", score:79, note:"Rested 7 months in American white oak. Caramel, cocoa and vanilla are pleasant, but the profile leans additive-suspected and manufactured-smooth rather than naturally expressive." },
+  { brand:"Casamigos", expression:"Añejo", type:"Añejo", score:80, note:"Aged 14 months in American white oak. Butterscotch, mocha and warm spice give it more depth, though the soft, sweet finish still feels additive-shaped rather than honest agave." },
 
   // ESPOLÓN
   { brand:"Espolón", expression:"Blanco", type:"Blanco", score:77, note:"Produced at San Nicolás distillery in the Los Altos Highlands, owned by Campari Group. Fruity and full-bodied with tropical fruit, white pepper and a spicy, clean finish." },
@@ -237,8 +600,8 @@ const data = [
   { brand:"Espolón", expression:"Añejo", type:"Añejo", score:81, note:"11 months in American oak followed by 2 months in ex-Wild Turkey bourbon barrels. Bright reddish-gold, caramel, dark chocolate, dried fruit and a complex, velvety finish." },
 
   // JOSE CUERVO
-  { brand:"Jose Cuervo", expression:"Especial Silver", type:"Blanco", score:45, note:"Produced at La Rojeña, Latin America's oldest active distillery (est. 1758). A mixto — only 51% agave. Sharp and hot with little agave character. Mixing only." },
-  { brand:"Jose Cuervo", expression:"Especial Reposado", type:"Reposado", score:52, note:"La Rojeña distillery. Rested briefly in oak but remains a mixto blend. Caramel colour added. Mild vanilla and wood, but thin agave presence. Cocktail use only." },
+  { brand:"Jose Cuervo", expression:"Especial Silver", type:"Blanco", score:45, note:"Produced at La Rojeña, Latin America's oldest active distillery. A mixto with only 51% agave, and it tastes like the corners were cut: sharp, hot, thin and basically absent of real agave character." },
+  { brand:"Jose Cuervo", expression:"Especial Reposado", type:"Reposado", score:52, note:"Briefly rested but still a mixto, with caramel colour doing cosmetic additive work. Mild vanilla and wood cannot hide the thin base spirit. Use for cheap party cocktails, not sipping." },
   { brand:"Jose Cuervo", expression:"Tradicional Silver", type:"Blanco", score:65, note:"100% blue agave from the family's own fields — unlike the Especial line. Light agave, herbal notes, fresh citrus and a clean, mildly spiced finish." },
   { brand:"Jose Cuervo", expression:"Reserva de la Familia Platino", type:"Blanco", score:76, note:"Cuervo's prestige silver — hand-blown bottle, hand-numbered, wax sealed. Clove, white pepper, cinnamon and a hint of citrus on the finish." },
   { brand:"Jose Cuervo", expression:"Reserva de la Familia XA", type:"Extra Añejo", score:85, note:"The world's first extra-añejo tequila, from the Cuervo family's private reserve. Aged 3+ years in French and American oak. Dried fruit, dark chocolate, vanilla and toasted oak." },
@@ -247,26 +610,26 @@ const data = [
   { brand:"1800", expression:"Blanco (Silver)", type:"Blanco", score:67, note:"Produced at Casa Cuervo's Circuito distillery in Jalisco. Double-distilled 100% blue agave. Mild agave and citrus with a slightly medicinal finish. Best in cocktails." },
   { brand:"1800", expression:"Reposado", type:"Reposado", score:69, note:"Aged 6+ months in American and French oak at the Jalisco Circuito distillery. Buttery caramel, mild spice and light smokiness. More suited to mixing than sipping neat." },
   { brand:"1800", expression:"Añejo", type:"Añejo", score:76, note:"Aged 14+ months in French oak barrels. Toasted oak, vanilla, butterscotch and a well-rounded, spicy finish — the strongest expression in the core 1800 range." },
-  { brand:"1800", expression:"Cristalino", type:"Añejo", score:77, note:"Añejo aged in American and French oak with a Port wine cask finish, then carbon-filtered crystal clear. Sweet vanilla and dried fruit in a visually striking clear spirit." },
-  { brand:"1800", expression:"Milenio", type:"Extra Añejo", score:84, note:"Winner of World's Best Tequila 2024. Aged 40 months in American oak, finished 4 months in French ex-cognac barrels. Dark amber, vanilla, red fruit, cinnamon and mint chocolate." },
+  { brand:"1800", expression:"Cristalino", type:"Añejo", score:77, note:"Añejo aged in American and French oak with a Port wine cask finish, then carbon-filtered clear. Sweet vanilla and dried fruit look polished; cristalinos often read additive-suspected when the sweetness outruns the agave." },
+  { brand:"1800", expression:"Milenio", type:"Extra Añejo", score:84, note:"Winner of World's Best Tequila 2024. Aged 40 months in American oak, finished in French ex-cognac barrels. Dark amber, vanilla, red fruit and mint chocolate; rich, but still fairly polished and sweet." },
 
   // EL JIMADOR
-  { brand:"El Jimador", expression:"Blanco", type:"Blanco", score:65, note:"Named after the skilled agave harvesters of Jalisco. Now uses diffuser extraction — a shortcut the AMM community penalises. Citrus and light agave, but lacks depth." },
-  { brand:"El Jimador", expression:"Reposado", type:"Reposado", score:68, note:"Rested 2 months in handmade American oak barrels at the El Salto distillery. Warm vanilla and agave notes, but diffuser production limits complexity." },
-  { brand:"El Jimador", expression:"Añejo", type:"Añejo", score:71, note:"Estate-bottled at El Salto, Jalisco. Cooked agave, vanilla, brown spice and nutty overtones in a deep copper-coloured spirit. The best expression of the three." },
+  { brand:"El Jimador", expression:"Blanco", type:"Blanco", score:65, note:"Named after the skilled agave harvesters of Jalisco, but now uses diffuser extraction — efficient, cheap and exactly the sort of shortcut AMM drinkers mark down. Citrus and light agave, little soul." },
+  { brand:"El Jimador", expression:"Reposado", type:"Reposado", score:68, note:"Rested 2 months in American oak. Warm vanilla helps, but diffuser production leaves the centre hollow. Acceptable mixer, weak choice if someone wants to taste real agave." },
+  { brand:"El Jimador", expression:"Añejo", type:"Añejo", score:71, note:"Oak, vanilla and brown spice make this the best of the three, but that is a low bar. The ageing covers some flaws without turning it into a genuinely characterful añejo." },
 
   // ALTOS
   { brand:"Altos", expression:"Plata (Blanco)", type:"Blanco", score:81, note:"Produced at Olmeca's La Guadalupana distillery using traditional tahona and roller mill. Named top Margarita tequila by Drinks International. Herbal, fresh citrus and smooth agave." },
   { brand:"Altos", expression:"Reposado", type:"Reposado", score:79, note:"Multi-award winner at the San Francisco World Spirits Competition. Rested in oak with citrus, vanilla and fresh agave notes — robust yet approachable." },
 
   // CLASE AZUL
-  { brand:"Clase Azul", expression:"Reposado", type:"Reposado", score:84, note:"Each hand-painted ceramic decanter takes 3 days to craft at the distillery in El Arenal, Jalisco. Slow-cooked agave 72+ hours. Silky caramel, vanilla, honey and dried fruit." },
-  { brand:"Clase Azul", expression:"Plata", type:"Blanco", score:64, note:"Produced at NOM 1416 in Jesús María, Los Altos — same distillery as Casamigos and Avión. Unaged, presented in the iconic hand-painted decanter. Sweet cooked agave and smooth vanilla, but the AMM community flags heavy artificial sweetness and a short, slightly bitter finish." },
+  { brand:"Clase Azul", expression:"Reposado", type:"Reposado", score:84, note:"The hand-painted decanter is spectacular and the liquid is silky caramel, vanilla and honey. Be honest though: this is additive-suspected luxury tequila, and a lot of the price is bottle theatre." },
+  { brand:"Clase Azul", expression:"Plata", type:"Blanco", score:64, note:"Produced at NOM 1416 in Jesús María, same distillery as Casamigos and Avión. The AMM community flags heavy artificial sweetness, smooth vanilla and a short bitter finish: very additive-suspected." },
 
   // HERRADURA
   { brand:"Herradura", expression:"Reposado", type:"Reposado", score:78, note:"Casa Herradura invented the reposado category in 1974. Aged 11 months — far longer than the 2-month minimum. Cooked agave, vanilla, butter and a warm spiced oak finish." },
   { brand:"Herradura", expression:"Añejo", type:"Añejo", score:80, note:"Aged 25 months at the historic Casa Herradura estate in Amatitán — 13 months beyond industry standards. Toasted oak, cooked agave, dried fruit and a smooth amber finish." },
-  { brand:"Herradura", expression:"Ultra Cristalino", type:"Añejo", score:81, note:"A blend of premium Añejo and Extra Añejo barrels filtered over hard sugar maple charcoal for a crystal-clear spirit. Agave nectar sweetness, vanilla and a light oak finish." },
+  { brand:"Herradura", expression:"Ultra Cristalino", type:"Añejo", score:81, note:"A blend of Añejo and Extra Añejo barrels filtered clear over sugar maple charcoal. Agave nectar sweetness and vanilla make it smooth, but also push it into additive-suspected cristalino territory." },
 
   // CINCORO
   { brand:"Cincoro", expression:"Blanco", type:"Blanco", score:72, note:"Michael Jordan's tequila, co-owned by NBA team owners. Highland and Lowland agave blended for complexity. Floral aromas, green agave and a sweet, slightly syrupy finish." },
@@ -279,10 +642,10 @@ const data = [
   { brand:"Teremana", expression:"Añejo", type:"Añejo", score:77, note:"Pot-distilled and aged in American oak at the TeRemana estate in Jalisco. The most complex of the range — toasted oak, dried fruit and a warm, lingering sweetness." },
 
   // 818
-  { brand:"818", expression:"Blanco", type:"Blanco", score:60, note:"Kendall Jenner's tequila, named after her California area code. Made in Jalisco at the NOM 1440 distillery. Light and sweet — lemongrass, chamomile and almond. Very mild agave presence." },
-  { brand:"818", expression:"Reposado", type:"Reposado", score:65, note:"Aged in American oak at the Jalisco-based NOM 1440 distillery. Vanilla, coconut and toasted oak — though reviewers note the profile feels more flavoured than naturally developed." },
-  { brand:"818", expression:"Añejo", type:"Añejo", score:69, note:"Aged in ex-bourbon barrels and finished in ex-red wine casks. Notes of caramel, toasted coconut and dark fruit. The most complete expression in the 818 range." },
-  { brand:"818", expression:"Eight Reserve (Añejo)", type:"Añejo", score:74, note:"818's prestige blend — a carefully curated mix of aged barrels. Smooth and layered with butterscotch, dried fig and toasted oak, though reviewers find it sweet-forward." },
+  { brand:"818", expression:"Blanco", type:"Blanco", score:60, note:"Kendall Jenner's tequila, made at NOM 1440. Light, sweet and soft, with lemongrass and almond notes. Widely additive-suspected, with agave presence so mild it feels designed not to challenge anyone." },
+  { brand:"818", expression:"Reposado", type:"Reposado", score:65, note:"Vanilla, coconut and toasted oak dominate. If that sounds like flavouring rather than barrel maturity, AMM drinkers largely agree: additive-suspected, smooth, and not very convincing." },
+  { brand:"818", expression:"Añejo", type:"Añejo", score:69, note:"Ex-bourbon ageing and red-wine finishing bring caramel, toasted coconut and dark fruit. The most complete 818, but still additive-suspected and styled rather than naturally complex." },
+  { brand:"818", expression:"Eight Reserve (Añejo)", type:"Añejo", score:74, note:"Prestige blend with butterscotch, dried fig and toasted oak. More layered than the core range, but the luxury packaging, sweetness and additive-suspected profile outrun the tequila character." },
 
   // TEQUILA OCHO
   { brand:"Tequila Ocho", expression:"Plata (Blanco)", type:"Blanco", score:87, note:"The world's first single-estate, vintage-dated tequila — each batch names the rancho and harvest year. Bright fresh agave, citrus zest, mineral earthiness and a long clean finish." },
@@ -291,6 +654,9 @@ const data = [
   { brand:"El Cristiano", expression:"Blanco", type:"Blanco", score:78, note:"Produced at NOM 1499 in Jalisco. 100% blue agave, brick oven roasted and pot distilled. Herbal agave, white pepper and fresh citrus with a smooth, clean finish." },
   { brand:"El Cristiano", expression:"Reposado", type:"Reposado", score:81, note:"Rested in American oak barrels at the NOM 1499 distillery. Balanced vanilla, cooked agave and light toasted oak with a soft, approachable finish." },
   { brand:"El Cristiano", expression:"Extra Añejo", type:"Extra Añejo", score:87, note:"Extended aging at NOM 1499. Rich and complex — dark caramel, roasted agave, dried dark fruit, cinnamon and a long, warming spiced oak finish. Outstanding value." },
+
+  // FLORCITA
+  { brand:"Florcita", expression:"Blanco", type:"Blanco", score:null, note:"Missing a reliable AMM community rating at the moment, so treat it as unproven rather than endorsed. Until drinkers weigh in, judge it in-store by agave clarity, not by how sweet or artificially smooth it seems." },
 
   // ROOSTER ROJO
   { brand:"Rooster Rojo", expression:"Blanco", type:"Blanco", score:71, note:"Produced at the Corporación Ansan distillery in Jalisco. 100% blue agave, traditional production. Initially sweet and fruit-forward, finishing with a distinct peppery spice." },
@@ -309,8 +675,8 @@ const data = [
   { brand:"La Gritona", expression:"Reposado", type:"Reposado", score:84, note:"Small family-run distillery in Valle de Guadalupe, Jalisco Highlands, all-female production team. Unusually vegetal for a reposado — fresh agave, green herbs and a round, clean finish." },
 
   // SAN JOSE
-  { brand:"San Jose", expression:"Silver", type:"Blanco", score:56, note:"Produced by La Martiniquaise in Jalisco. Sweet agave and fruity aromas on the nose, strong and sweet on the palate with a lingering sweetness. Budget cocktail tier." },
-  { brand:"San Jose", expression:"Gold", type:"Gold", score:61, note:"Gold/Joven — a blend of blanco and aged spirit for colour and softness. Fruity sweetness with gentle spice. Crowd-pleasing for Margaritas and Tequila Sunrises." },
+  { brand:"San Jose", expression:"Silver", type:"Blanco", score:56, note:"Budget cocktail tier. Sweet fruit on the nose, then a strong, sugary palate with little depth. The low AMM score is fair: it is functional, not characterful." },
+  { brand:"San Jose", expression:"Gold", type:"Gold", score:61, note:"Gold/Joven built for colour, softness and easy mixed drinks. Likely caramel-colour/additive territory: fruity sweetness and gentle spice, but not much serious agave underneath." },
 
   // PONCHOS / TEQUILA 125
   { brand:"Ponchos", expression:"1910 Caramel", type:"Liqueur", score:null, note:"An infusion of tequila with rich caramel-toffee flavouring. Burnt caramel aroma, sweet and indulgent palate. Best served straight or over ice as a dessert sipper." },
@@ -327,9 +693,9 @@ const data = [
   { brand:"Cazcabel", expression:"Coconut Liqueur", type:"Liqueur", score:null, note:"Cazcabel Blanco infused with Jalisco coconut. Sweet tropical coconut aroma with earthy agave underneath — smooth, warm and sweet on the finish." },
 
   // SIERRA
-  { brand:"Sierra", expression:"Blanco", type:"Blanco", score:35, note:"Iconic red sombrero bottle — one of Australia's most recognised tequila brands. A mixto containing only 51% agave. Hot and sharp with little agave character. Mixing only." },
-  { brand:"Sierra", expression:"Reposado", type:"Reposado", score:null, note:"The reposado from Sierra's mixto range. 9 months in toasted oak barrels. Vanilla and caramel dominate — similar limitations to the Silver due to the mixto base." },
-  { brand:"Sierra", expression:"Tropical Chilli", type:"Liqueur", score:null, note:"Tropical fruit meets chilli heat in this flavoured spirit from Sierra. Sweet and spicy — best served chilled as a shot or over ice." },
+  { brand:"Sierra", expression:"Blanco", type:"Blanco", score:35, note:"Iconic red sombrero bottle, infamous liquid. A mixto with only 51% agave: hot, sharp and thin, with almost no real agave character. The AMM score is a warning label." },
+  { brand:"Sierra", expression:"Reposado", type:"Reposado", score:null, note:"The reposado from Sierra's mixto range. Oak, vanilla and caramel-colour/additive cues try to patch over the same weak base spirit. Better colour, same fundamental problem." },
+  { brand:"Sierra", expression:"Tropical Chilli", type:"Liqueur", score:null, note:"Tropical fruit and chilli heat in a flavoured spirit. Judge it as a party shot, not as tequila craftsmanship; the flavouring is the point, not the agave." },
 
   // PANTALONES
   { brand:"Pantalones", expression:"Blanco Organico", type:"Blanco", score:73, note:"100% certified organic blue agave from Jalisco. Playfully branded, seriously made — cooked in brick ovens. Sweet agave, honey, citrus and a smooth, clean finish." },
@@ -416,6 +782,172 @@ function updateHeaders() {
   });
 }
 
+function escapeHTML(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function splitNote(note) {
+  const clean = note.trim();
+  const match = clean.match(/^(.+?[.!?])\s+(.*)$/);
+  if (!match) return { fact: clean, taste: 'No detailed tasting note listed yet.' };
+  return { fact: match[1], taste: match[2] };
+}
+
+function cleanOpinionText(value) {
+  return value
+    .replace(/The AMM score is a warning label\./g, 'The low score is a warning label.')
+    .replace(/\bAMM community\b/g, 'experienced drinkers')
+    .replace(/\bAMM drinkers\b/g, 'experienced drinkers')
+    .replace(/\bAMM scores it accordingly\b/g, 'that score feels fair')
+    .replace(/\bAMM scores\b/g, 'ratings')
+    .replace(/\bAMM\b/g, 'the rating')
+    .replace(/The the rating score/g, 'The low score');
+}
+
+function additiveRead(r) {
+  const text = `${r.brand} ${r.expression} ${r.type} ${r.note}`.toLowerCase();
+  const suspectedBrands = ['casamigos', '818', 'clase azul'];
+  const suspectedDonJulio = r.brand === 'Don Julio' && r.expression !== 'Blanco';
+
+  if (r.type === 'Liqueur') {
+    return 'Flavoured product, so the flavouring is intentional; judge it as a liqueur, not pure tequila craft.';
+  }
+  if (suspectedBrands.some(name => text.includes(name)) || suspectedDonJulio || text.includes('additive-suspected') || text.includes('artificial sweetness') || text.includes('additive cues')) {
+    return 'Likely additive-suspected: the sweetness and smoothness feel more engineered than agave-led.';
+  }
+  if (text.includes('caramel colour') || text.includes('caramel-colour') || r.type === 'Gold') {
+    return 'Likely cosmetic additive territory: colour and softness are doing more work than real ageing.';
+  }
+  if (text.includes('cristalino') || text.includes('agave nectar')) {
+    return 'Cristalino sweetness is a caution flag; it can look premium while hiding the base spirit.';
+  }
+  if (text.includes('diffuser')) {
+    return 'No classic sweet-additive flag, but diffuser production is still a shortcut and it shows.';
+  }
+  if (text.includes('mixto')) {
+    return 'Mixto base is the bigger issue: less agave character, often patched with colour or sweetness.';
+  }
+  if (text.includes('additive-free')) {
+    return 'Producer claims additive-free; that fits the cleaner, less fake-sweet profile.';
+  }
+  return 'No obvious additive red flag from the note; judge by whether agave stays clearer than sweetness.';
+}
+
+const verdicts = {
+  "Fortaleza|Blanco": "Easy top pick. This is what blanco should taste like: cooked agave first, pepper and herbs after, no makeup needed.",
+  "Fortaleza|Reposado": "One of the safest recommendations on the shelf. It has oak and vanilla, but the agave still runs the show.",
+  "Fortaleza|Añejo": "Outstanding sipper. Rich and aged without turning into fake dessert tequila, so I would happily point serious customers here.",
+  "Don Julio|Blanco": "Clean and useful, but not exciting. I would sell it as a safe cocktail blanco, not as the bottle that proves tequila is great.",
+  "Don Julio|Reposado": "Pleasant and easy, but a bit too rounded for my taste. Good for someone who wants soft vanilla, not for someone chasing raw agave.",
+  "Don Julio|Añejo": "Tasty, smooth and very polished. I would call it a crowd-pleaser, but I would not pretend it is the most honest aged tequila.",
+  "Don Julio|1942 Añejo": "People love it, and I get why, but it is luxury-sweet more than agave-serious. Great gift bottle, not my first pick for value or purity.",
+  "Don Julio|Rosado": "Pretty bottle, pretty colour, pretty average idea. I would only recommend it to someone specifically asking for the pink port-cask novelty.",
+  "Patrón|Silver": "Reliable but overrated. It is clean enough for cocktails, though at this price I would rather steer people to something with more character.",
+  "Patrón|Reposado": "Soft, light and harmless. I would use it when someone wants an easy reposado, but it does not give much reason to get excited.",
+  "Patrón|Añejo": "Smooth and tidy, but a bit safe. Fine for someone coming from whisky, not the bottle I would choose to show off aged tequila.",
+  "Patrón|El Alto": "Better than standard Patrón and more interesting. Still polished, but the tahona weight gives it enough character to recommend carefully.",
+  "Patrón|El Cielo": "Too clean for its own good. Four distillations make it sleek, but also strip away some of the flavour I actually want in blanco.",
+  "Casamigos|Blanco": "Too sweet and polished for me. Fine for someone chasing smooth, but I would not call it good tequila.",
+  "Casamigos|Reposado": "The best Casamigos for casual drinkers, but still too dessert-like. I would be upfront that the smoothness is the selling point, not craft.",
+  "Casamigos|Añejo": "Nice enough if someone wants sweet and soft. I would not push it to agave fans because the flavour feels styled.",
+  "Espolón|Blanco": "Solid working tequila. I like it for Margaritas and parties, but it is not refined enough to be a special sipper.",
+  "Espolón|Reposado": "Good bar bottle. The oak makes it rounder, but I would still treat it as a reliable mixer more than a neat pour.",
+  "Espolón|Añejo": "This is the strongest Espolón. It has enough oak and chocolate to sip, while still being honest for the price.",
+  "Jose Cuervo|Especial Silver": "Avoid unless the budget is brutal. It is harsh, thin mixto tequila and there are cleaner mixers.",
+  "Jose Cuervo|Especial Reposado": "Barely better than the silver. The colour and vanilla do not fix the weak mixto base, so I would keep it to cheap punches.",
+  "Jose Cuervo|Tradicional Silver": "A big step up from Especial, but still not great. Fine for basic cocktails if someone wants Cuervo without the mixto burn.",
+  "Jose Cuervo|Reserva de la Familia Platino": "Respectable, but priced like it should be more exciting. I would recommend it only if someone specifically wants premium Cuervo.",
+  "Jose Cuervo|Reserva de la Familia XA": "Actually good. Rich, old-school and worth considering if someone wants a deep extra añejo without going celebrity-sweet.",
+  "1800|Blanco (Silver)": "Not a sipper. Fine for Margaritas if it is cheap, but I would point people to a cleaner blanco first.",
+  "1800|Reposado": "Better with lime than neat. The caramel and butter notes are okay, but the finish is not good enough to recommend as a sipper.",
+  "1800|Añejo": "The core-range 1800 I dislike least. It is decent for an easy aged pour, but still not a bottle I would get passionate about.",
+  "1800|Cristalino": "Looks fancy, but I would rather spend the money on a cleaner aged tequila unless they specifically want the clear-sweet style.",
+  "1800|Milenio": "Rich and impressive on paper, but still quite polished. I would recommend it to someone wanting a plush gift bottle, not a purist pick.",
+  "El Jimador|Blanco": "Cheap, diffuser-flat and not very satisfying. I would only use it in mixed drinks where the tequila is not meant to shine.",
+  "El Jimador|Reposado": "Usable mixer, weak sipper. The oak helps, but it still tastes like a budget shortcut.",
+  "El Jimador|Añejo": "Best of a weak family. It has some oak comfort, but I would still choose a cleaner reposado before this añejo.",
+  "Altos|Plata (Blanco)": "Very good value. This is the kind of blanco I would happily recommend for Margaritas and casual sipping.",
+  "Altos|Reposado": "Dependable and bartender-friendly. Not amazing neat, but a strong all-rounder for the money.",
+  "Clase Azul|Reposado": "Beautiful object, very sweet liquid. I would sell it as a luxury gift, not as proof someone loves real tequila.",
+  "Clase Azul|Plata": "Massive red flag for me. Too sweet, too polished and too expensive for a blanco that does not taste honest.",
+  "Herradura|Reposado": "A classic reposado with real history. I like it for someone who wants oak but still wants actual cooked agave underneath.",
+  "Herradura|Añejo": "Solid aged tequila. It is smooth without going full candy, so I would recommend it over many flashier añejos.",
+  "Herradura|Ultra Cristalino": "Smooth and pretty, but the sweetness feels dressed up. I would choose regular Herradura Añejo unless clear and soft is the whole brief.",
+  "Cincoro|Blanco": "Too expensive for what it is. The syrupy finish makes me suspicious, and the celebrity angle is doing too much work.",
+  "Cincoro|Reposado": "Sweet, glossy and overpriced. I would only recommend it to someone already sold on the brand.",
+  "Cincoro|Añejo": "The best Cincoro, but still priced like a trophy. Nice richness, though I would rather buy a more honest extra añejo.",
+  "Teremana|Blanco": "Fine celebrity tequila, nothing more. It is clean enough, but I would not oversell it as small-batch magic.",
+  "Teremana|Reposado": "Easy and friendly, but a little plain. Good for casual drinkers, not a bottle I would recommend to tequila nerds.",
+  "Teremana|Añejo": "The most complete Teremana. Still soft and approachable, but at least there is enough oak to make it interesting.",
+  "818|Blanco": "Hard no for sipping. It is sweet, thin and built for people who do not really want tequila flavour.",
+  "818|Reposado": "Vanilla-coconut smoothness is the whole trick. I would not recommend it unless someone specifically wants sweet celebrity tequila.",
+  "818|Añejo": "Better than the blanco, still not convincing. The finishing gives flavour, but it feels styled rather than earned.",
+  "818|Eight Reserve (Añejo)": "More expensive and more layered, but still not where I would spend premium money. Packaging beats liquid here.",
+  "Tequila Ocho|Plata (Blanco)": "Excellent. This is the kind of blanco I would use to show someone what clean, farm-driven tequila can be.",
+  "El Cristiano|Blanco": "Good, clean blanco. I would recommend it to someone who wants something polished but still recognisably agave-led.",
+  "El Cristiano|Reposado": "Strong pick. The oak is gentle and the agave stays clear, so it works for both new drinkers and fussy ones.",
+  "El Cristiano|Extra Añejo": "Excellent value for a serious aged bottle. Rich enough for whisky drinkers, but not fake-sweet or tacky.",
+  "Florcita|Blanco": "Unproven. I would taste it before recommending it, and I would be watching for real agave rather than easy sweetness.",
+  "Rooster Rojo|Blanco": "Acceptable but basic. I would use it for spicy or fruity cocktails, not as a neat recommendation.",
+  "KAH|Blanco": "The skull bottle is doing most of the selling. The tequila is light and forgettable, so buy it for the look, not the liquid.",
+  "KAH|Reposado": "Same story: fun bottle, soft tequila. I would not recommend it to someone who cares about flavour.",
+  "Milagro|Leyenda Silver": "Clean and bright, but not deep. I would use it as a safe cocktail blanco rather than a serious sipper.",
+  "Maestro Dobel|50 Cristalino": "Luxurious and smooth, but very filtered and polished. I would recommend it only to someone who specifically likes cristalino style.",
+  "La Gritona|Reposado": "Great pick if someone wants character. It is vegetal and different in a good way, not another vanilla-smooth reposado.",
+  "San Jose|Silver": "Rough budget mixer. I would not sip it, and I would only sell it when price matters more than flavour.",
+  "San Jose|Gold": "Party-mix tequila. The sweetness and colour make it easy, but there is not much real tequila to talk about.",
+  "Ponchos|1910 Caramel": "Dessert liqueur, not tequila in any meaningful tasting sense. Fine over ice if they want caramel sweetness.",
+  "Tequila 125|Silver": "Unrated budget blanco. I would keep it to cocktails until it proves it has clean agave character.",
+  "Tequila 125|Gold": "Cheap mixer territory. Good enough for sweet mixed drinks, not something I would pour neat.",
+  "Luna Hueca|Blanco": "Could be interesting if the agave character is real. Without a rating, I would pitch it carefully and taste first.",
+  "El Arquero|Blanco": "Sounds promising on paper, but it is still unproven. I would recommend only after checking it is not just smooth marketing.",
+  "Cazcabel|Blanco": "Good value and genuinely useful. I would recommend this over a lot of bigger-name blancos.",
+  "Cazcabel|Reposado": "Solid reposado. Dry, earthy and balanced enough that I would sell it as a proper step up from sweet supermarket bottles.",
+  "Cazcabel|Añejo": "Promising, but unrated. I like the house style, so I would taste this before dismissing it.",
+  "Cazcabel|Coffee Liqueur": "Coffee liqueur first, tequila second. Good for shots or dessert drinks, not for judging tequila quality.",
+  "Cazcabel|Coconut Liqueur": "Tropical and sweet by design. I would sell it for cocktails, not to anyone asking for proper tequila.",
+  "Sierra|Blanco": "Hard pass for sipping. Only makes sense for cheap mixed drinks where nobody is looking for agave character.",
+  "Sierra|Reposado": "Same weak base with more colour. I would not recommend it unless someone just needs the cheapest bottle for mixers.",
+  "Sierra|Tropical Chilli": "Flavoured party shot. Fun for the right customer, but it has nothing to do with good tequila.",
+  "Pantalones|Blanco Organico": "Better than the branding makes it look. I would still call it casual and sweet-leaning, not a serious blanco.",
+  "Pantalones|Reposado Organico": "Easy crowd-pleaser. I would recommend it for smooth reposado drinkers, but not for someone avoiding sweet profiles.",
+  "Pantalones|Añejo Organico": "Unrated, but likely the one to try if someone likes soft, rich aged tequila. I would not oversell it without tasting.",
+  "Solento|Blanco Organic": "Unrated but sounds clean and simple. I would try it chilled or in a light cocktail before calling it a sipper.",
+  "Solento|Reposado Organic": "Soft organic reposado for easy drinking. I would not expect huge depth, but it could work for gentle cocktails.",
+  "Solento|Añejo Organic": "Probably the most interesting Solento. I would pitch it to someone wanting mellow oak, not bold agave.",
+  "Don Ramón|Platinium Plata": "Good-looking bottle, unproven liquid. I would taste for agave clarity before recommending it over rated blancos.",
+  "Don Ramón|Platinium Reposado Cristalino": "Clear reposado is a style choice, not a quality guarantee. I would sell it only to someone wanting smooth and pretty.",
+  "Don Ramón|Platinium Añejo Cristalino": "The additive-free claim helps, but it is still a cristalino. I would try it, but I would not assume filtered means better.",
+  "El Toro|Blanco": "Sounds like a decent everyday blanco, but unrated. I would keep the recommendation modest until tasting confirms it.",
+  "El Toro|Jalapeño": "Useful for spicy Margaritas. I would not treat it as tequila craft; it is a cocktail tool.",
+  "El Toro|Coconut": "Coconut cocktail bottle. Fine for tropical drinks, but the flavouring is the whole reason to buy it.",
+  "Ghost|Spicy Agave (Blanco)": "Buy it for heat, not purity. Great for spicy cocktails if the pepper is balanced, pointless as a neat blanco.",
+  "Doña Celia|Blanco": "The ceramic bottle is the hook. I would taste carefully before recommending, because pretty packaging often outruns the tequila.",
+  "1965 Reserva|Flask Blanco": "Convenient packaging, unknown tequila. I would sell it for novelty/travel, not as a flavour recommendation.",
+  "Reserva de MFM|Blanco": "Sounds promising and traditional, but unrated. I would try it neat first; if the cooked agave is real, it could be a sleeper.",
+  "Mex|Mango Cream Tequila": "Dessert drink, full stop. Fun in shooters or over ice cream, but not something I would call tequila quality.",
+  "Mango Shotta|Tequila Liqueur": "Designed for party shots. The mango, chilli and chamoy are the point, so do not judge it like tequila.",
+  "Tequila Soldada|Blanco": "Unrated and very sweet-sounding. I would taste before recommending because 'undeniably sweet and smooth' can be a warning sign.",
+  "Cinca|Tequila Coconut": "Coconut liqueur for tropical drinks. Nice if they want sweet coconut, useless if they want real agave character."
+};
+
+function honestVerdict(r) {
+  return verdicts[`${r.brand}|${r.expression}`] || 'I would taste this before recommending it; the note is not specific enough to make a strong call.';
+}
+
+function formatNote(r) {
+  const parts = splitNote(r.note);
+  return `<span class="note-part"><span class="note-label">Fact:</span> ${escapeHTML(cleanOpinionText(parts.fact))}</span>
+    <span class="note-part"><span class="note-label">Taste:</span> ${escapeHTML(cleanOpinionText(parts.taste))}</span>
+    <span class="note-part"><span class="note-label">Additives:</span> ${escapeHTML(additiveRead(r))}</span>
+    <span class="note-part"><span class="note-label">Verdict:</span> ${escapeHTML(honestVerdict(r))}</span>`;
+}
+
 function renderTable() {
   const tbody = document.getElementById('tbody');
   const rows = applySort([...data]);
@@ -423,14 +955,15 @@ function renderTable() {
   tbody.innerHTML = rows.map((r, i) => {
     const show = currentFilter==='all' || r.type===currentFilter;
     if (show) visible++;
+    const noteHtml = formatNote(r);
     return `<tr class="${show?'':'hidden'}" data-note-id="note-${i}" onclick="toggleNote('note-${i}')">
       <td><span class="brand-name">${r.brand}</span><span class="expression">${r.expression}</span><span class="tap-hint">tap for note ▾</span></td>
       <td><span class="type-pill ${pillClass(r.type)}">${r.type}</span></td>
       <td class="score-cell"><span class="score-badge ${scoreClass(r.score)}">${scoreLabel(r.score)}</span></td>
-      <td class="note-cell">${r.note}</td>
+      <td class="note-cell">${noteHtml}</td>
     </tr>
     <tr id="note-${i}" class="note-row collapsed ${show?'':'hidden'}">
-      <td colspan="3">${r.note}</td>
+      <td colspan="3">${noteHtml}</td>
     </tr>`;
   }).join('');
   document.getElementById('visCount').textContent = visible;
@@ -438,8 +971,8 @@ function renderTable() {
 }
 
 function toggleNote(id) {
-  // Only act on mobile
-  if (window.innerWidth > 700) return;
+  // Only act on narrow portrait mobile layout.
+  if (window.innerWidth > 700 || !window.matchMedia('(orientation: portrait)').matches) return;
   const noteRow = document.getElementById(id);
   if (!noteRow) return;
   const isExpanded = noteRow.classList.contains('expanded');
@@ -474,6 +1007,46 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     renderTable();
   });
 });
+
+// TAB SWITCHING
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// DID YOU KNOW FACTS
+const facts = [
+  "Blue Weber agave takes 7–12 years to mature before it can be harvested — the same plant can never be harvested twice.",
+  "The blue agave plant only flowers once in its lifetime. Jimadores cut the flower stalk (quiote) before it blooms to keep sugars in the piña.",
+  "One mature agave piña can weigh up to 90kg and yield only about 4–5 litres of finished tequila.",
+  "Tequila can only legally be produced in the state of Jalisco and small parts of 4 other Mexican states.",
+  "Herradura invented the reposado category in 1974 — before that, tequila was either blanco or añejo.",
+  "The word 'jimador' refers to the skilled workers who harvest agave — a trade passed down through generations in Jalisco.",
+  "Fortaleza uses a stone tahona wheel over 100 years old to crush roasted agave — the same one the Sauza family used.",
+  "Casamigos, Clase Azul Plata and Avión all come from the exact same distillery — NOM 1416 in Jesús María.",
+  "Mexican law allows up to 1% additives in tequila without any label disclosure — this is why '100% agave' doesn't guarantee an additive-free spirit.",
+  "Tequila Ocho was the world's first vintage-dated tequila, listing the specific farm and harvest year on every bottle.",
+  "El Cristiano Extra Añejo scores 87 on AMM — the joint highest-rated expression in our entire range.",
+  "La Gritona is distilled entirely by an all-female production team in the Jalisco Highlands.",
+  "The tahona is a large stone wheel traditionally pulled by a mule, used to crush roasted agave. Slower and costlier than roller mills but preserves more flavour.",
+  "Extra Añejo as a legal category only came into existence in 2006 — before that, anything aged over 3 years was simply called añejo.",
+  "Clase Azul's iconic hand-painted ceramic decanters each take 3 days to craft and paint by artisans in Santa María Canchesdé.",
+  "A 'diffuser' is an industrial machine that extracts agave sugars using hot water — faster and cheaper but lower quality. El Jimador switched to diffusers and AMM scores dropped significantly.",
+  "The piña (heart) of the agave plant is named after the pineapple — it resembles one in shape after the spiky leaves are removed.",
+  "Don Julio González started making tequila in 1942 at age 17 — the 1942 expression is named in tribute to that year.",
+  "Jose Cuervo's La Rojeña distillery has been operating since 1758 — one of the oldest continuously operating distilleries in the Americas.",
+  "Mezcal and tequila are both made from agave, but mezcal can use any of 40+ agave species while tequila must use Blue Weber exclusively.",
+];
+let factIndex = Math.floor(Math.random() * facts.length);
+function nextFact() {
+  factIndex = (factIndex + 1) % facts.length;
+  document.getElementById('dykText').textContent = facts[factIndex];
+}
+document.getElementById('dykText').textContent = facts[factIndex];
 
 renderTable();
 </script>
